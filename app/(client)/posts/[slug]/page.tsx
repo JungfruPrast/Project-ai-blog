@@ -140,7 +140,7 @@ const generateSlug = (text: string): string =>
   text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
 
 
-export const myPortableTextComponents: Partial<PortableTextProps['components']> = {
+ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
   types: {
     block: ({ value }: { value: Block }) => {
       const { style, _key, children, markDefs } = value;
