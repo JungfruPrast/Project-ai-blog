@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* globals.css */
+
+/* Custom scrollbar for Webkit browsers */
+html::-webkit-scrollbar {
+    width: 2vw;
+  }
+  
+  html::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 0.5rem;
+  }
+  
+  html::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 0.5rem;
+    
+  }
+  
+  /* For Firefox */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #757575 #f0f0f000;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 2vw;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #000000;
+    border-radius: 15px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 15px;
+    border: 3px solid #0e0e0e;
+  }
+  
+  /* For Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #9e9e9e #2c2c2c00;
+  }
+  
+  /* Example CSS to add indentation to nested lists */
+ul { /* Targeting all unordered lists */
+  padding-left: 15px; /* Adds indentation to nested lists */
+}
+
+li { /* Targeting all list items */
+  margin-bottom: 5px; /* Adds some space between list items */
+}
+
+  
+  
