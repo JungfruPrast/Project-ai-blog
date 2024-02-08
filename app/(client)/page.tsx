@@ -7,7 +7,7 @@ import PostComponent from '../components/PostComponent';
 
 async function getPosts() {
   const query = `
-  *[_type == "post"] {
+  *[_type == "post"] | order(publishedAt desc) {
     title,
     slug,
     publishedAt,
