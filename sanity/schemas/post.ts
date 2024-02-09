@@ -22,12 +22,6 @@ export const post = {
             options: { source: "title"}
         },
         {
-            name: "about",
-            title: "About",
-            type: "reference",
-            to: [{type: "about"}]
-        },
-        {
             name: "publishedAt",
             title: "Published at",
             type: "datetime",
