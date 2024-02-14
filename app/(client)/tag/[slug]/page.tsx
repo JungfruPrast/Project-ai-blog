@@ -23,7 +23,7 @@ async function getPostsByTag(tag: string) {
   return posts;
 }
 
-export const revalidate = 60;
+export const revalidate = 600;
 
 interface Params {
   params: {
@@ -36,7 +36,7 @@ const page = async ({ params }: Params) => {
   console.log(posts, "posts by tag");
   return (
     <div>
-      <Header title={`#${params?.slug}`} tags />
+      <Header title={`${params?.slug}`} tags />
       <div>
         {posts?.length > 0 && posts?.map((post) => (
           <PostComponent key={post?._id} post={post} />

@@ -43,7 +43,7 @@ return post;
 }
 
 //acts as refresh for any changes made within the content 
-export const revalidate = 60;
+export const revalidate = 600;
 
 
 //dynamic metagenerator 
@@ -200,7 +200,7 @@ const generateSlug = (text: string): string =>
     ),
 
     codeBlock: ({ value }: { value: CodeBlockValue }) => (
-      <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg max-h-64 bg-amber-50 shadow-md dark:bg-inherit dark:shadow-gray-700">
+      <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-amber-50 shadow-md dark:bg-inherit dark:shadow-gray-700">
         <code className="language-javascript">{value.code}</code>
       </pre>
     ),

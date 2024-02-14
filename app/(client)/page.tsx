@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import { Post } from '../utils.tsx/Interface';
 import PostComponent from '../components/PostComponent';
 
-
+//set the display of content to latest published
 async function getPosts() {
   const query = `
   *[_type == "post"] | order(publishedAt desc) {
@@ -22,7 +22,7 @@ async function getPosts() {
   return data;
   }
 
-  export const revalidate = 60;
+  export const revalidate = 600;
 
   export default async function Home() {
     const posts: Post[] = await getPosts();
