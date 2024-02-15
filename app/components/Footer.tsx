@@ -7,8 +7,9 @@ const Footer = () => (
     <div className='border-t border-gray-300 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center h-auto md:h-16 px-4 py-4 md:px-6 mx-auto max-w-5xl w-full'>
       {/* Adjust paragraph margin on small screens */}
       <p className="text-sm text-left mb-4 md:mb-0">
-        I'm Ezra Leong, an SEO specialist exploring the future development of AI and its impact on content creation. I'm currently developing documentation on AI content creation best practices through trial and error.
+        I&apos;m Ezra Leong, an SEO specialist exploring the future development of AI and its impact on content creation. I&apos;m currently developing documentation on AI content creation best practices through trial and error.
       </p>
+
       <div className="flex items-center space-x-4">
         <ThemesSwitch />
         <a href="https://www.linkedin.com/public-profile/settings" target="_blank" rel="noopener noreferrer">
