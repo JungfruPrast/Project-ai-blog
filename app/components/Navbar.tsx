@@ -26,14 +26,14 @@ const Navbar = () => {
     <div className='sticky top-0 z-50 bg-inherit shadow dark:shadow-gray-600 w-full'>
       <div className='flex justify-between items-center h-16 px-6 mx-auto max-w-5xl w-full'>
         <Link href='/' passHref>
-          <div className='text-2xl font-bold cursor-pointer'>Project AI Blog</div>
+          <div className='text-2xl font-bold'>Project AI Blog</div>
         </Link>
 
         {/* Dynamically generate links for pages */}
         <div className='flex items-center space-x-7 font-semibold text-lg'>
           {pages.map((page) => (
             <Link key={page.slug} href={`/${page.slug}`} passHref>
-              <div className='hover:underline cursor-pointer'>{page.title}</div>
+              <div>{page.title}</div>
             </Link>
           ))}
           
