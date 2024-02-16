@@ -136,6 +136,19 @@ interface CodeBlockValue {
   language?: string;
 }
 
+interface TableRow {
+  _key: string;
+  _type: 'tableRow';
+  cells: string[]; // Cells are just strings
+}
+
+interface Table {
+  _key: string;
+  _type: 'table';
+  rows: TableRow[];
+}
+
+
 const generateSlug = (text: string): string =>
   text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
 
@@ -208,8 +221,28 @@ const generateSlug = (text: string): string =>
         <CopyToClipboard textToCopy={value.code} />
       </div>
     </div>
-
     ),
+
+    table: ({ value }: { value: Table }) => (
+      // Wrap the table in a div with overflow-x-auto to allow horizontal scrolling on small screens
+      <div className="overflow-x-auto custom-scrollbar">
+        <table className="min-w-full divide-y divide-gray-200 ">
+          <tbody className="divide-y divide-gray-200">
+            {value.rows.map((row, rowIndex) => (
+              <tr key={row._key || rowIndex}>
+                {row.cells.map((cellContent, cellIndex) => (
+                  <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm">
+                    {cellContent} {/* Directly render the string content of the cell */}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ),
+    
+
   }
 };
 
