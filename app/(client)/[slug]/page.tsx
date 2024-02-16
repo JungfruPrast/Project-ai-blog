@@ -2,8 +2,7 @@ import React from 'react';
 import { client } from '@/sanity/lib/client'; // Adjust the import path as necessary
 import Header from '@/app/components/Header';
 import { PortableText } from '@portabletext/react';
-import notFound from '../posts/[slug]/not-found';
-
+import { notFound } from 'next/navigation';
 // Update the interface to match the new schema
 interface PageData {
   title: string;

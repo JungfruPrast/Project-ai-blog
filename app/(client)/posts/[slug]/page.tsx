@@ -11,7 +11,7 @@ import { ResolvingMetadata } from 'next';
 import TableOfContents from '@/app/components/ToC';
 import { extractAndNestHeadingsFromBody } from '@/app/components/ToC';
 import { notFound } from 'next/navigation';
-
+import CopyToClipboard from '@/app/components/CopytoClipboard';
 
 //defining the parameters of the query function
 interface Params {
@@ -72,7 +72,7 @@ const page = async ({params}: Params) => {
   //below the div className of portabletext is essentially uploads fetches the content you've written and displays it to the front end. 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen">
-        <div className="flex-grow flex flex-col items-center">
+        <article className="flex-grow flex flex-col items-center">
             <Header title={post?.title}/>
             <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
                 <span className='date'>{new Date(post?.publishedAt).toDateString()}</span>
@@ -84,7 +84,7 @@ const page = async ({params}: Params) => {
                         }
                         return (
                             <Link key={tag._id} href={`/tag/${tag.slug.current}`}>
-                                <div className='inline-flex mr-1 p-2 rounded-full text-sm lowercase border hover:bg-black hover:text-white dark:hover:bg-amber-50 dark:hover:text-black'>
+                                <div className='inline-flex mr-1 p-2 rounded-full text-sm bg-black text-white dark:bg-white dark:text-black'>
                                     #{tag.name}
                                 </div>
                             </Link>
@@ -97,7 +97,7 @@ const page = async ({params}: Params) => {
                 </div>
               
             </div>
-        </div>
+        </article>
         {headings && headings.length > 0 && (
             <div className="hidden lg:block w-64">
                 <TableOfContents headings={headings}/>
@@ -200,9 +200,15 @@ const generateSlug = (text: string): string =>
     ),
 
     codeBlock: ({ value }: { value: CodeBlockValue }) => (
-      <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-amber-50 shadow-md dark:bg-inherit dark:shadow-gray-700">
+      <div className="relative">
+      <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-inherit shadow-md dark:bg-inherit dark:shadow-gray-700">
         <code className="language-javascript">{value.code}</code>
       </pre>
+      <div className="absolute bottom-0 right-0 m-2">
+        <CopyToClipboard textToCopy={value.code} />
+      </div>
+    </div>
+
     ),
   }
 };

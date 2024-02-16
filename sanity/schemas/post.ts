@@ -1,6 +1,4 @@
 import { Rule } from "sanity";
-import { defineConfig } from "sanity";
-import { CodeInput } from "@sanity/code-input";
 //this is an example; this gets displayed in the sanity studio UI 
 
 export const post = {
@@ -54,7 +52,14 @@ export const post = {
                         { title: 'JavaScript', value: 'javascript' },
                         { title: 'HTML', value: 'html' },
                         { title: 'CSS', value: 'css' },
-            ]}}
+                      ],
+                    },
+                },
+                {
+                    // Add the table as a type option within the body field
+                    type: 'table', // Ensure this matches the type name defined by @sanity/table or your custom configuration
+                    title: 'Table', // Optional: Customize the display title for the table type in the studio UI
+                },
             ],
         },
         {

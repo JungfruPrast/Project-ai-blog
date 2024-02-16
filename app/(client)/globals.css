@@ -56,4 +56,7 @@ li { /* Targeting all list items */
 }
 
   
+html {
+  scroll-behavior: smooth;
+}
   

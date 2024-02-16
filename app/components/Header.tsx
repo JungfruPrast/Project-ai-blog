@@ -11,7 +11,7 @@ const Header = ({title = "", tags = false}: Props) => {
     <header className='py-14 px-4 mb-12 text-center border-b dark:border-gray-600'>
         <h1 className='uppercase text-3xl mx-auto max-w-2xl font-bold'>{title}</h1>
         {tags && (
-          <div className='inline-block text-sm font-semibold mt-2 rounded-full hover:bg-black hover:text-amber-50 px-2 py-2 dark:hover:bg-white dark:hover:text-black'>
+          <div className='inline-block text-sm font-semibold mt-2 rounded-full bg-black text-white px-2 py-2 dark:bg-white dark:text-black'>
             <Link href="/tag">Sort by tags</Link>
           </div>
         )}

@@ -15,7 +15,7 @@ const Footer = () => (
         <a href="https://www.linkedin.com/public-profile/settings" target="_blank" rel="noopener noreferrer">
           <LinkedInIcon />
         </a>
-      </div>
+      </div>        
     </div>
   </div>
 );
