@@ -10,45 +10,32 @@ async function getAllTags() {
     name,
     slug,
     _id,
-    "postCount": count(*[_type == "post" && references("tags",^.id)])
+    "postCount": count(*[_type == "post" && references(^._id)])
   }
   `;
-  const tags = client.fetch(query);
+  const tags = await client.fetch(query); // Ensure 'await' is used to wait for the fetch result.
   return tags;
 }
 
 export const revalidate = 600;
 
 const page = async () => {
-  const tags: Tag[] = await getAllTags()
-  console.log(tags, "tags")
+  const tags: Tag[] = await getAllTags();
+  console.log(tags, "tags");
   return (
-    <div>
+    <div className='m-auto max-w-4xl p-4'> {/* Added padding for spacing around the content */}
       <Header title="Tags"/>
       <div>
-        {tags?.length > 0 && tags?.map((tag) => (
-          <Link key={tag?._id} href={`/tag/${tag.slug.current}`}>
-          <div className={cardStyle}>
-            {tag.name} ({tag?.postCount})
-          </div>
+        {tags?.length > 0 && tags.map((tag) => (
+          <Link key={tag._id} href={`/tag/${tag.slug.current}`}>
+            <div className="block mb-8 p-4 border border-gray-900 rounded-md shadow-md shadow-gray-600 hover:bg-gray-950 hover:text-white dark:hover:bg-zinc-900 transition-colors">
+              {tag.name} ({tag.postCount})
+            </div>
           </Link>
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default page
-
-const cardStyle = `
-mb-4 
-p-4
-border
-border-gray-900
-rounded-md
-shadow-md
-shadow-gray-600
-hover:bg-gray-950
-hover:text-white
-hover:dark:bg-zinc-900
-`
+export default page;

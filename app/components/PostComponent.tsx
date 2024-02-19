@@ -34,6 +34,7 @@ const PostComponent = ({post}: Props) => {
 export default PostComponent
 
 const cardStyle = `
+max-w-6xl
 mb-8 
 p-4
 border

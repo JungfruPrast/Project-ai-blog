@@ -99,8 +99,8 @@ const page = async ({params}: Params) => {
             </div>
         </article>
         {headings && headings.length > 0 && (
-            <div className="hidden lg:block w-64">
-                <TableOfContents headings={headings}/>
+            <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar flex-shrink-0 w-60">
+              <TableOfContents headings={headings}/>
             </div>
         )}
     </div>

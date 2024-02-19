@@ -24,7 +24,7 @@ export default function RootLayout({
         <Provider>
           <Navbar />
           {/* Adjust padding and max-width responsively for smaller screens */}
-          <main className="flex-grow mx-auto p-4 sm:px-6 lg:px-8 max-w-4xl lg:max-w-5xl w-full">
+          <main className="flex-grow mx-auto p-4 sm:px-6 lg:px-8 max-w-6xl lg w-full">
             {children}
           </main>
           <Footer/>

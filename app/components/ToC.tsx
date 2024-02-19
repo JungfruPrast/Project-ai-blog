@@ -81,7 +81,7 @@ const RenderHeadings = ({ headings }: { headings: Heading[] }) => (
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
   return (
-    <nav aria-label="Table of contents" className='mt-16 lg:fixed lg:top-16 lg:h-screen overflow-auto text-sm'>
+    <nav aria-label="Table of contents">
       <RenderHeadings headings={headings} />
     </nav>
   );
