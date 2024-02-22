@@ -40,8 +40,8 @@ async function getSEOData(slug: string) {
     `;
 
     const seoData = await client.fetch(query);
-    console.log(seoData.title); // Debugging log
-    console.log(seoData.publishedAt);
+    console.log(seoData?.title); // Debugging log
+    console.log(seoData?.publishedAt);
     return seoData;
 }
 
@@ -63,18 +63,16 @@ const SEOPage = async ({ params }: Params) => {
     const seoData: SEO = await getSEOData(params?.slug);
 
     if (!seoData) {
-        notFound();
+        notFound(); 
     }
 
     const headings = extractAndNestHeadingsFromBody(seoData.body);
 
-    const navbarData = seoData ? [{ title: seoData?.title, slug: seoData?.slug }] : [];
-
     return (
         <div className="flex flex-col lg:flex-row min-h-screen">
-            <div className="sticky top-28 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar flex-shrink-0 w-auto">
+            <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar shrink-0 w-48">
              <ResponsiveSidebarWrapper>
-              <LeftSideNavbar seoDocuments={navbarData}/>
+             <LeftSideNavbar/>
             </ResponsiveSidebarWrapper>
             </div>
             <article className="flex-grow flex flex-col items-center">
