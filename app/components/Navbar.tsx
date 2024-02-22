@@ -23,7 +23,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className='sticky top-0 z-50 bg-inherit shadow dark:shadow-gray-600 w-full'>
+    <nav className='sticky top-0 z-50 bg-inherit shadow dark:shadow-gray-600 w-full'>
       <div className='flex justify-between items-center h-16 px-6 mx-auto max-w-6xl w-full'>
         <Link href='/' passHref>
           <div className='text-2xl font-bold'>Project AI Blog</div>
@@ -42,7 +42,7 @@ const Navbar = () => {
         </div>
         
       </div>
-    </div>
+    </nav>
   );
 };
 

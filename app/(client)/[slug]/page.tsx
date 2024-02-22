@@ -65,7 +65,7 @@ const renderPage = async ({ params }: Params) => {
   // Proceed with rendering using the fetched page data
   // This illustrative logic assumes execution in an environment where JSX can be directly returned from async functions.
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen w-full">
+    <div className="flex flex-col lg:flex-row min-h-screen w-full lg:max-w-6xl">
       <div className="w-full">
         
           <Header title={pageData?.title} />

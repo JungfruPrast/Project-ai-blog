@@ -20,11 +20,11 @@ interface LeftSideNavbarProps {
 const LeftSideNavbar: React.FC<LeftSideNavbarProps> = ({ seoDocuments }) => {
   return (
     // Mimicking the styling of TableOfContents: fixed position, width, height adjustments, overflow handling, and custom scrollbar.
-    <nav className='mt-16'>
+    <nav>
       {seoDocuments.map((seoDocument, index) => (
         <div key={index} className="mb-2">
-          <Link href={`/seodocument/${seoDocument.slug.current}`} passHref>
-            <div className="block p-2 rounded hover:bg-zinc-900">
+          <Link href={`/seodocuments/${seoDocument?.slug?.current}`}>
+            <div className="block p-2 rounded dark:hover:bg-zinc-900">
               {seoDocument.title}
             </div>
           </Link>

@@ -36,7 +36,49 @@ export const SEO = {
             title: "Body",
             type: "array",
             of: [
-                {type: "block"},
+                {
+                    type: "block",
+                    styles: [
+                        { title: "Normal", value: "normal" },
+                        { title: "H1", value: "h1" },
+                        { title: "H2", value: "h2" },
+                        { title: "H3", value: "h3" },
+                        { title: "H4", value: "h4" },
+                        { title: "H5", value: "h5" },
+                        { title: "H6", value: "h6" },
+                        { title: "Quote", value: "blockquote" },
+                    ], // Include other styles as needed
+                    marks: {
+                        // Define the annotations for links
+                        annotations: [
+                            {
+                                name: "link",
+                                type: "object",
+                                title: "Link",
+                                fields: [
+                                    {
+                                        name: "href",
+                                        title: "URL",
+                                        type: "url",
+                                        description: "Use for external links",
+                                    },
+                                    {
+                                        name: "internalLink",
+                                        title: "Internal Link",
+                                        type: "reference",
+                                        to: [{type: "post"}], // Adjust to your internal document types
+                                        description: "Use for internal links",
+                                    },
+                                    {
+                                        name: "newWindow",
+                                        title: "Open in new window",
+                                        type: "boolean",
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                },
                 {
                     type: "image",
                     fields: [{type: "text", name: "alt", title: "Alt"}],
@@ -67,6 +109,12 @@ export const SEO = {
             title: "Tags",
             type: "array",
             of: [{type: "reference", to: [{type: "tag"}] }]
+        },
+        {
+            name: "relatedpages",
+            title: "Related Pages",
+            type: "array",
+            of: [{type: "reference", to: [{type: "seo"}] }]
         }
     ],
 }

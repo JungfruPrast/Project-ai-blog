@@ -34,7 +34,7 @@ const nestHeadings = (headings: Heading[]): Heading[] => {
         currentLevel.children = [];
       }
       if (!currentLevel.children[currentLevel.children.length - 1]) {
-        currentLevel.children.push({ id: `auto-gen-${i}`, text: `On this page`, level: `h${i}`, children: [] });
+        currentLevel.children.push({ id: ` `, text: `On this page`, level: `h${i}`, children: [] });
       }
       currentLevel = currentLevel.children[currentLevel.children.length - 1];
     }
@@ -88,3 +88,4 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ headings }) => {
 };
 
 export default TableOfContents;
+

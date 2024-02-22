@@ -260,6 +260,7 @@ prose-h2:font-bold
 prose-h3:font-bold
 prose-h4:font-bold
 prose-h5:font-bold
+prose-h6:font-bold
 prose-p:mb-5
 prose-p: leading-9 
 prose-li:list-disc

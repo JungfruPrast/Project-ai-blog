@@ -1,23 +1,21 @@
 import { Rule } from "sanity";
-//this is an example; this gets displayed in the sanity studio UI 
 
 export const post = {
     name: "post",
     title: "Post",
     type: "document",
-
     fields: [ 
         {
             name: "title",
             title: "Title",
             type: "string",
-            validation: (Rule: Rule) => Rule.required().error('Required')
+            validation: (Rule:Rule) => Rule.required().error('Required')
         },
         {
             name: "slug",
             title: "Slug",
             type: "slug",
-            options: { source: "title"}
+            options: { source: "title" }
         },
         {
             name: "publishedAt",
@@ -29,14 +27,56 @@ export const post = {
             name: "excerpt",
             title: "Excerpt",
             type: "text",
-            validation: (Rule: Rule) => Rule.max(200).error('Max 200 characters')
+            validation: (Rule:Rule) => Rule.max(200).error('Max 200 characters')
         },
         {
             name: "body",
             title: "Body",
             type: "array",
             of: [
-                {type: "block"},
+                {
+                    type: "block",
+                    styles: [
+                        { title: "Normal", value: "normal" },
+                        { title: "H1", value: "h1" },
+                        { title: "H2", value: "h2" },
+                        { title: "H3", value: "h3" },
+                        { title: "H4", value: "h4" },
+                        { title: "H5", value: "h5" },
+                        { title: "H6", value: "h6" },
+                        { title: "Quote", value: "blockquote" },
+                    ], // Include other styles as needed
+                    marks: {
+                        // Define the annotations for links
+                        annotations: [
+                            {
+                                name: "link",
+                                type: "object",
+                                title: "Link",
+                                fields: [
+                                    {
+                                        name: "href",
+                                        title: "URL",
+                                        type: "url",
+                                        description: "Use for external links",
+                                    },
+                                    {
+                                        name: "internalLink",
+                                        title: "Internal Link",
+                                        type: "reference",
+                                        to: [{type: "post"}], // Adjust to your internal document types
+                                        description: "Use for internal links",
+                                    },
+                                    {
+                                        name: "newWindow",
+                                        title: "Open in new window",
+                                        type: "boolean",
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                },
                 {
                     type: "image",
                     fields: [{type: "text", name: "alt", title: "Alt"}],
@@ -46,8 +86,8 @@ export const post = {
                     name: "codeBlock",
                     type: "code",
                     options: {
-                      theme: 'github', // Optional: Specify a theme for the code editor
-                      language: 'javascript', // Default language
+                      theme: 'github',
+                      language: 'javascript',
                       languageAlternatives: [
                         { title: 'JavaScript', value: 'javascript' },
                         { title: 'HTML', value: 'html' },
@@ -56,9 +96,7 @@ export const post = {
                     },
                 },
                 {
-                    // Add the table as a type option within the body field
-                    type: 'table', // Ensure this matches the type name defined by @sanity/table or your custom configuration
-                    title: 'Table', // Optional: Customize the display title for the table type in the studio UI
+                    type: 'table',
                 },
             ],
         },
@@ -67,6 +105,12 @@ export const post = {
             title: "Tags",
             type: "array",
             of: [{type: "reference", to: [{type: "tag"}] }]
-        }
+        },
+        {
+            name: "relatedpages",
+            title: "Related Pages",
+            type: "array",
+            of: [{type: "reference", to: [{type: "post"}] }]
+        },
     ],
-}
+};

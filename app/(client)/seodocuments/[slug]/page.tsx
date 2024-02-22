@@ -12,6 +12,9 @@ import CopyToClipboard from "@/app/components/CopytoClipboard";
 import { PortableTextProps } from "@portabletext/react";
 import { SEO } from "@/app/utils.tsx/Interface";
 import LeftSideNavbar from "@/app/components/LeftSideNavbar";
+import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
+import { ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 interface Params {
     params: {
@@ -37,22 +40,24 @@ async function getSEOData(slug: string) {
     `;
 
     const seoData = await client.fetch(query);
+    console.log(seoData.title); // Debugging log
+    console.log(seoData.publishedAt);
     return seoData;
 }
 
 export const revalidate = 600;
 
-//add meta generator later//
-//export async function generateMetadata({ params }: { params: { slug: string } }, parent: ResolvingMetadata): Promise<Metadata> {
-//const slug = params.slug;
-//const post: Post = await getPost(slug);
 
-//return {
-//title: post?.title,
-//description: post?.excerpt
-//}
+export async function generateMetadata({ params }: { params: { slug: string } }, parent: ResolvingMetadata): Promise<Metadata> {
+const slug = params.slug;
+const seo: SEO = await getSEOData(slug);
+
+return {
+title: seo?.title,
+description: seo?.excerpt
+}
     // Add other metadata fields as needed e.g opengraph 
-//};
+};
 
 const SEOPage = async ({ params }: Params) => {
     const seoData: SEO = await getSEOData(params?.slug);
@@ -63,16 +68,18 @@ const SEOPage = async ({ params }: Params) => {
 
     const headings = extractAndNestHeadingsFromBody(seoData.body);
 
-    const navbarData = seoData ? [{ title: seoData.title, slug: seoData.slug }] : [];
+    const navbarData = seoData ? [{ title: seoData?.title, slug: seoData?.slug }] : [];
 
     return (
         <div className="flex flex-col lg:flex-row min-h-screen">
-          <div className="sticky top-20 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar flex-shrink-0 w-52">
-            <LeftSideNavbar seoDocuments={navbarData}/>
-          </div>
-            <article className="mx-auto w-max">
+            <div className="sticky top-28 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar flex-shrink-0 w-auto">
+             <ResponsiveSidebarWrapper>
+              <LeftSideNavbar seoDocuments={navbarData}/>
+            </ResponsiveSidebarWrapper>
+            </div>
+            <article className="flex-grow flex flex-col items-center">
                 <Header title={seoData?.title}/>
-                <div className='text-center w-full'>
+                <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
                     <span className='date'>{new Date(seoData?.publishedAt).toDateString()}</span>
                     <div className='mt-5'>
                         {seoData?.tags?.map((tag) => {
@@ -256,6 +263,7 @@ interface MarkDef {
   prose-h3:font-bold
   prose-h4:font-bold
   prose-h5:font-bold
+  prose-h6:font-bold
   prose-p:mb-5
   prose-p: leading-9 
   prose-li:list-disc
