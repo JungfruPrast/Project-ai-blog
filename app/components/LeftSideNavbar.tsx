@@ -38,7 +38,7 @@ const LeftSideNavbar: React.FC = () => {
       {seoDocuments.map((doc, index) => (
         <div key={index} className="mb-2">
           <Link href={`/seodocuments/${doc.slug}`}>
-            <div className="block p-2 rounded dark:hover:bg-zinc-900">
+            <div className="block p-2 rounded hover:font-semibold">
               {doc.title}
             </div>
           </Link>

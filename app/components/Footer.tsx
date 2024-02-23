@@ -9,12 +9,12 @@ const Footer = () => (
       <p className="text-sm text-left mb-4 md:mb-0">
         Hey I am Ezra Leong, an SEO specialist exploring the future development of AI and its impact on content creation. I am currently developing documentation on AI content creation best practices through trial and error. Stay tuned.
       </p>
-
       <div className="flex items-center space-x-4">
-        <ThemesSwitch />
+        
         <a href="https://www.linkedin.com/public-profile/settings" target="_blank" rel="noopener noreferrer">
           <LinkedInIcon />
         </a>
+        <ThemesSwitch />
       </div>        
     </div>
   </div>

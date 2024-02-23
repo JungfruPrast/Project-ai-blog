@@ -70,7 +70,7 @@ const RenderHeadings = ({ headings }: { headings: Heading[] }) => (
   <ul className='space-y-1 text-left'>
     {headings.map(heading => (
       <li key={heading.id}>
-        <a href={`#${heading.id}`} className='block p-2 hover:bg-inherit dark:hover:bg-zinc-900'>
+        <a href={`#${heading.id}`} className='block p-2 hover:font-semibold'>
           {heading.text}
         </a>
         {heading.children && heading.children.length > 0 && <RenderHeadings headings={heading.children} />}
