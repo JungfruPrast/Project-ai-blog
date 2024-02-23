@@ -15,6 +15,7 @@ import LeftSideNavbar from "@/app/components/LeftSideNavbar";
 import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
 import { ResolvingMetadata } from "next";
 import { Metadata } from "next";
+import { SanityClient } from "sanity";
 
 interface Params {
     params: {
@@ -40,24 +41,86 @@ async function getSEOData(slug: string) {
     `;
 
     const seoData = await client.fetch(query);
-    console.log(seoData?.title); // Debugging log
-    console.log(seoData?.publishedAt);
     return seoData;
 }
 
 export const revalidate = 600;
 
+interface BaseBlock {
+  _type: string;
+}
+
+interface ImageBlock extends BaseBlock {
+  _type: 'image';
+  asset: {
+    _ref: string;
+  };
+}
+
+// Assuming OtherBlock could be of any type other than 'image'
+interface OtherBlock extends BaseBlock {
+  // Other properties specific to non-image blocks
+}
+
+// Union type for content blocks
+type ContentBlock = ImageBlock | OtherBlock;
+
+const findFirstImageUrl = (body: ContentBlock[]): string | undefined => {
+  // Explicit type guard to ensure the block is an ImageBlock
+  const imageBlock = body.find((block): block is ImageBlock => block._type === 'image' && 'asset' in block) as ImageBlock | undefined;
+
+  // Assuming urlForImage is properly typed to accept ImageBlock['asset'] and return an object with a .url() method
+  return imageBlock ? urlForImage(imageBlock.asset).url() : undefined;
+};
 
 export async function generateMetadata({ params }: { params: { slug: string } }, parent: ResolvingMetadata): Promise<Metadata> {
-const slug = params.slug;
-const seo: SEO = await getSEOData(slug);
+  const slug = params.slug;
+  const seoData: SEO = await getSEOData(slug);
 
-return {
-title: seo?.title,
-description: seo?.excerpt
+  if (!seoData) {
+    return {}; 
+  }
+
+  const imageUrl = findFirstImageUrl(seoData.body); // Assuming seoData.body is an array of ContentBlocks
+
+  // Dynamically generate metadata including structured data
+  const structuredData = {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://project-ai-blog.vercel.app/${slug}`
+    },
+    "headline": seoData.title,
+    "image": findFirstImageUrl ? [findFirstImageUrl] : undefined,
+    "datePublished": seoData.publishedAt,
+    "dateModified": seoData.publishedAt,
+    "author": {
+      "@type": "Person",
+      "name": "Ezra" // Modify as needed
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Ezra Leong", // Modify as needed
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://example.com/logo.png" // Modify as needed
+      }
+    },
+    "description": seoData.excerpt
+  };
+
+  return {
+    title: seoData.title,
+    description: seoData.excerpt,
+    openGraph: {
+      url: `https://project-ai-blog.vercel.app/${slug}`, // Adjust with your actual URL structure
+      title: seoData.title,
+      description: seoData.excerpt,
+      images: imageUrl ? [{ url: imageUrl, width: 800, height: 600, alt: seoData.title }] : [],
+    },
+  };
 }
-    // Add other metadata fields as needed e.g opengraph 
-};
 
 const SEOPage = async ({ params }: Params) => {
     const seoData: SEO = await getSEOData(params?.slug);
@@ -105,6 +168,7 @@ const SEOPage = async ({ params }: Params) => {
               </div>
         )}
         </div>
+        
     );
 };
 
@@ -273,3 +337,7 @@ interface MarkDef {
   prose-code:text-red-500
   
   `;
+
+function imageUrlBuilder(client: SanityClient) {
+  throw new Error("Function not implemented.");
+}

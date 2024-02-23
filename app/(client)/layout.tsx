@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://project-ai-blog.vercel.app/'),
   title: "My AI Blogging Journey",
   description: "Follow me as I document my practices of AI content creation following SEO best practices with the goal of getting monetized",
 };
