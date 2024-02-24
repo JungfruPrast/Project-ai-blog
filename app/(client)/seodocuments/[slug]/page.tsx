@@ -140,7 +140,7 @@ const SEOPage = async ({ params }: Params) => {
         />
        
         <div className="flex flex-col lg:flex-row min-h-screen">
-            <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar shrink-0 w-48">
+            <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar shrink-0 w-48">
              <ResponsiveSidebarWrapper>
              <LeftSideNavbar/>
             </ResponsiveSidebarWrapper>

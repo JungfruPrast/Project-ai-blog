@@ -28,11 +28,11 @@ const ResponsiveSidebarWrapper: React.FC<ResponsiveSidebarWrapperProps> = ({ chi
       )}
 
       {/* Sidebar Content */}
-      <div className={`fixed lg:static ${isSidebarVisible ? 'block' : 'hidden'} lg:block z-30 dark:bg-transparent`}>
+      <div className={`absolute lg:static ${isSidebarVisible ? 'block' : 'hidden'} lg:block z-30 dark:bg-transparent`}>
         {/* Children components are rendered here */}
-        <div className="overflow-y-auto max-h-[calc(100vh-5rem)]">
+        
           {children}
-        </div>
+        
       </div>
     </nav>
   );
