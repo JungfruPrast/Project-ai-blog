@@ -136,8 +136,7 @@ const SEOPage = async ({ params }: Params) => {
       <>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}/>
        
         <div className="flex flex-col lg:flex-row min-h-screen">
             <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar shrink-0 w-48 sm:max-h-screen sm:overflow-y-auto">
