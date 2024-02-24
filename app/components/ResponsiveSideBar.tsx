@@ -28,7 +28,7 @@ const ResponsiveSidebarWrapper: React.FC<ResponsiveSidebarWrapperProps> = ({ chi
       )}
 
       {/* Sidebar Content */}
-      <div className={`relative lg:static ${isSidebarVisible ? 'block' : 'hidden'} lg:block z-50 dark:bg-transparent overflow-y-auto max-h-screen`}>
+      <div className={`relative lg:static ${isSidebarVisible ? 'block' : 'hidden'} lg:block z-50 dark:bg-transparent overflow-y-auto max-h-screen responsive-sidebar-wrapper`}>
         {/* Children components are rendered here */}
         {children}
       </div>

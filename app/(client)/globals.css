@@ -59,4 +59,13 @@ li { /* Targeting all list items */
 html {
   scroll-behavior: smooth;
 }
-  
+
+/* Target the ResponsiveSidebarWrapper or the specific class/id you use for the scrollable area */
+.responsive-sidebar-wrapper::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit browsers (Chrome, Safari, newer versions of Opera) */
+}
+
+.responsive-sidebar-wrapper {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
