@@ -2,7 +2,7 @@ import ThemesSwitch from "./ThemesSwitch";
 import LinkedInIcon from "./Icons";
 
 const Footer = () => (
-  <div className='bottom-0 z-50 bg-inherit shadow dark:shadow-gray-600 w-full mt-10'>
+  <footer className='bottom-0 z-50 bg-inherit shadow dark:shadow-gray-600 w-full mt-10'>
     {/* Use flex-col for small screens and flex-row for medium screens and up */}
     <div className='border-t border-gray-300 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center h-auto md:h-16 px-4 py-4 md:px-6 mx-auto max-w-6xl w-full'>
       {/* Adjust paragraph margin on small screens */}
@@ -17,7 +17,7 @@ const Footer = () => (
         <ThemesSwitch />
       </div>        
     </div>
-  </div>
+  </footer>
 );
 
 export default Footer;

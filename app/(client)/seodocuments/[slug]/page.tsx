@@ -16,6 +16,7 @@ import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
 import { ResolvingMetadata } from "next";
 import { Metadata } from "next";
 import { SanityClient } from "sanity";
+import Head from "next/head";
 
 interface Params {
     params: {
@@ -83,33 +84,6 @@ export async function generateMetadata({ params }: { params: { slug: string } },
 
   const imageUrl = findFirstImageUrl(seoData.body); // Assuming seoData.body is an array of ContentBlocks
 
-  // Dynamically generate metadata including structured data
-  const structuredData = {
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://project-ai-blog.vercel.app/${slug}`
-    },
-    "headline": seoData.title,
-    "image": findFirstImageUrl ? [findFirstImageUrl] : undefined,
-    "datePublished": seoData.publishedAt,
-    "dateModified": seoData.publishedAt,
-    "author": {
-      "@type": "Person",
-      "name": "Ezra" // Modify as needed
-    },
-    "publisher": {
-      "@type": "Person",
-      "name": "Ezra Leong", // Modify as needed
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://example.com/logo.png" // Modify as needed
-      }
-    },
-    "description": seoData.excerpt
-  };
-
   return {
     title: seoData.title,
     description: seoData.excerpt,
@@ -130,8 +104,41 @@ const SEOPage = async ({ params }: Params) => {
     }
 
     const headings = extractAndNestHeadingsFromBody(seoData.body);
+    const imageUrl = findFirstImageUrl(seoData.body);
+    
+    const jsonLd = {
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://project-ai-blog.vercel.app/${params.slug}`
+      },
+      "headline": seoData.title,
+      "image": imageUrl ? [imageUrl] : undefined,
+      "datePublished": seoData.publishedAt,
+      "dateModified": seoData.publishedAt,
+      "author": {
+        "@type": "Person",
+        "name": "Ezra" // Modify as needed
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Ezra Leong", // Modify as needed
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://example.com/logo.png" // Modify as needed
+        }
+      },
+      "description": seoData.excerpt
+    };
 
     return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+       
         <div className="flex flex-col lg:flex-row min-h-screen">
             <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar shrink-0 w-48">
              <ResponsiveSidebarWrapper>
@@ -168,7 +175,7 @@ const SEOPage = async ({ params }: Params) => {
               </div>
         )}
         </div>
-        
+        </>
     );
 };
 
