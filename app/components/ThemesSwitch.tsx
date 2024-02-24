@@ -1,21 +1,17 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+
+import React from 'react';
 import { useTheme } from 'next-themes';
 import { SunIcon, MoonIcon } from './Icons';
 
 const ThemesSwitch = () => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
-  // Immediately mount component on client side
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Always render the button, but conditionally render its children based on the mounted state
+  // Directly return the button with icons, without waiting for the component to mount.
+  // This assumes that your icons can render without needing to know the theme or the mounted state.
   return (
     <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-      {mounted && (theme === 'dark' ? <SunIcon /> : <MoonIcon />)}
+      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
     </button>
   );
 };
