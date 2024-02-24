@@ -139,14 +139,9 @@ const SEOPage = async ({ params }: Params) => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}/>
        
         <div className="flex flex-col lg:flex-row min-h-screen">
-            <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar shrink-0 lg:w-48 sm:max-h-screen sm:overflow-auto sm:w-auto">
+            <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
              <ResponsiveSidebarWrapper>
-             <LeftSideNavbar/>
-             {headings && headings.length > 0 && (
-               
-              <TableOfContents headings={headings}/>
-              
-        )}
+              <LeftSideNavbar/>
             </ResponsiveSidebarWrapper>
             </div>
             <article className="flex-grow flex flex-col items-center">
