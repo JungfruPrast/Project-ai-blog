@@ -45,15 +45,53 @@ return post;
 //acts as refresh for any changes made within the content 
 export const revalidate = 600;
 
+interface BaseBlock {
+  _type: string;
+}
+
+interface ImageBlock extends BaseBlock {
+  _type: 'image';
+  asset: {
+    _ref: string;
+  };
+}
+
+// Assuming OtherBlock could be of any type other than 'image'
+interface OtherBlock extends BaseBlock {
+  // Other properties specific to non-image blocks
+}
+
+// Union type for content blocks
+type ContentBlock = ImageBlock | OtherBlock;
+
+const findFirstImageUrl = (body: ContentBlock[]): string | undefined => {
+  // Explicit type guard to ensure the block is an ImageBlock
+  const imageBlock = body.find((block): block is ImageBlock => block._type === 'image' && 'asset' in block) as ImageBlock | undefined;
+
+  // Assuming urlForImage is properly typed to accept ImageBlock['asset'] and return an object with a .url() method
+  return imageBlock ? urlForImage(imageBlock.asset).url() : undefined;
+};
 
 //dynamic metagenerator 
 export async function generateMetadata({ params }: { params: { slug: string } }, parent: ResolvingMetadata): Promise<Metadata> {
   const slug = params.slug;
   const post: Post = await getPost(slug);
 
+  if (!post) {
+    return{};
+  }
+
+  const imageUrl = findFirstImageUrl(post.body)
+
   return {
     title: post?.title,
-   description: post?.excerpt
+   description: post?.excerpt,
+   openGraph: {
+    url: `https://project-ai-blog.vercel.app/${slug}`, // Adjust with your actual URL structure
+      title: post.title,
+      description: post.excerpt,
+      images: imageUrl ? [{ url: imageUrl, width: 800, height: 600, alt: post.title }] : [],
+   }
     }
     // Add other metadata fields as needed e.g opengraph 
 };
@@ -69,8 +107,41 @@ const page = async ({params}: Params) => {
 
     const headings = extractAndNestHeadingsFromBody(post.body)
 
+    const imageUrl = findFirstImageUrl(post.body);
+    
+    const jsonLd = {
+      "@context": "http://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://project-ai-blog.vercel.app/${params.slug}`
+      },
+      "headline": post.title,
+      "image": imageUrl ? [imageUrl] : undefined,
+      "datePublished": post.publishedAt,
+      "dateModified": post.publishedAt,
+      "author": {
+        "@type": "Person",
+        "name": "Ezra" // Modify as needed
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Ezra Leong", // Modify as needed
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://example.com/logo.png" // Modify as needed
+        }
+      },
+      "description": post.excerpt
+    };
+
   //below the div className of portabletext is essentially uploads fetches the content you've written and displays it to the front end. 
   return (
+    <>
+    <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
     <div className="flex flex-col lg:flex-row min-h-screen">
         <article className="flex-grow flex flex-col items-center">
             <Header title={post?.title}/>
@@ -104,6 +175,7 @@ const page = async ({params}: Params) => {
             </div>
         )}
     </div>
+    </>
 );
 };
 
