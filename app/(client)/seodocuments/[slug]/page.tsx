@@ -142,6 +142,11 @@ const SEOPage = async ({ params }: Params) => {
             <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
              <ResponsiveSidebarWrapper>
               <LeftSideNavbar/>
+              {headings && headings.length > 0 && (
+               
+               <TableOfContents headings={headings}/>
+               
+         )}
             </ResponsiveSidebarWrapper>
             </div>
             <article className="flex-grow flex flex-col items-center">
