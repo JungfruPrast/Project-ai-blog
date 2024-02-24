@@ -170,7 +170,7 @@ const SEOPage = async ({ params }: Params) => {
                 </div>
             </article>
             {headings && headings.length > 0 && (
-              <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar flex-shrink-0 w-60">
+               <div className="hidden lg:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar flex-shrink-0 w-60">
               <TableOfContents headings={headings}/>
               </div>
         )}

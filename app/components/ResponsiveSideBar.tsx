@@ -22,13 +22,13 @@ const ResponsiveSidebarWrapper: React.FC<ResponsiveSidebarWrapperProps> = ({ chi
       {/* Overlay */}
       {isSidebarVisible && (
         <div
-          className="fixed inset-0 bg-opacity-50  bg-white dark:bg-black dark:bg-opacity-50 z-30"
+          className="fixed inset-0 bg-opacity-90  bg-white dark:bg-black dark:bg-opacity-90 z-30"
           onClick={() => setIsSidebarVisible(false)}
         ></div>
       )}
 
       {/* Sidebar Content */}
-      <div className={`absolute lg:static ${isSidebarVisible ? 'block' : 'hidden'} lg:block z-30 dark:bg-transparent`}>
+      <div className={`absolute lg:static ${isSidebarVisible ? 'block' : 'hidden'} lg:block z-30 dark:bg-transparent overflow-auto`}>
         {/* Children components are rendered here */}
         
           {children}
