@@ -24,6 +24,12 @@ export const post = {
             initialValue: () => new Date().toISOString(),
         },
         {
+            name: "updatedAt",
+            title: "Updated at",
+            type: "datetime",
+            initialValue: () => new Date().toISOString(),
+        },
+        {
             name: "excerpt",
             title: "Excerpt",
             type: "text",

@@ -27,6 +27,7 @@ async function getPost(slug: string) {
       title,
       slug,
       publishedAt,
+      updatedAt,
       excerpt,
       _id,
       body,
@@ -119,7 +120,7 @@ const page = async ({params}: Params) => {
       "headline": post.title,
       "image": imageUrl ? [imageUrl] : undefined,
       "datePublished": post.publishedAt,
-      "dateModified": post.publishedAt,
+      "dateModified": post.updatedAt ? post.updatedAt : post.publishedAt,
       "author": {
         "@type": "Person",
         "name": "Ezra" // Modify as needed
@@ -146,7 +147,16 @@ const page = async ({params}: Params) => {
         <article className="flex-grow flex flex-col items-center">
             <Header title={post?.title}/>
             <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
-                <span className='date'>{new Date(post?.publishedAt).toDateString()}</span>
+            <div className="date-info">
+          <time className="published-date" dateTime={post?.publishedAt}>
+             Published on: {new Date(post?.publishedAt).toDateString()}
+              </time>
+               {post?.updatedAt && new Date(post?.updatedAt).toDateString() !== new Date(post?.publishedAt).toDateString() && (
+                 <time className="updated-date" dateTime={post?.updatedAt}>
+                  <br />Updated on: {new Date(post?.updatedAt).toDateString()}
+                  </time>
+                  )}
+                </div>
                 <div className='mt-5'>
                     {post?.tags?.map((tag) => {
                         if (!tag || !tag.slug || !tag.slug.current) {

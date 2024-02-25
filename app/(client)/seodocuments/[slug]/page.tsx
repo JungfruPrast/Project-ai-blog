@@ -16,7 +16,6 @@ import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
 import { ResolvingMetadata } from "next";
 import { Metadata } from "next";
 import { SanityClient } from "sanity";
-import Head from "next/head";
 
 interface Params {
     params: {
@@ -31,6 +30,7 @@ async function getSEOData(slug: string) {
       title,
       slug,
       publishedAt,
+      updatedAt,
       excerpt,
       _id,
       body,
@@ -116,7 +116,7 @@ const SEOPage = async ({ params }: Params) => {
       "headline": seoData.title,
       "image": imageUrl ? [imageUrl] : undefined,
       "datePublished": seoData.publishedAt,
-      "dateModified": seoData.publishedAt,
+      "dateModified": seoData.updatedAt ? seoData.updatedAt : seoData.publishedAt,
       "author": {
         "@type": "Person",
         "name": "Ezra" // Modify as needed
@@ -147,7 +147,16 @@ const SEOPage = async ({ params }: Params) => {
             <article className="flex-grow flex flex-col items-center">
                 <Header title={seoData?.title}/>
                 <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
-                    <span className='date'>{new Date(seoData?.publishedAt).toDateString()}</span>
+                <div className="date-info">
+                  <time className="published-date" dateTime={seoData?.publishedAt}>
+                    Published on: {new Date(seoData?.publishedAt).toDateString()}
+                  </time>
+                    {seoData?.updatedAt && new Date(seoData?.updatedAt).toDateString() !== new Date(seoData?.publishedAt).toDateString() && (
+                      <time className="updated-date" dateTime={seoData?.updatedAt}>
+                        <br />Updated on: {new Date(seoData?.updatedAt).toDateString()}
+                      </time>
+                      )}
+                    </div>
                     <div className='mt-5'>
                         {seoData?.tags?.map((tag) => {
                            if (!tag || !tag.slug || !tag.slug.current) {
