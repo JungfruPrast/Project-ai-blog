@@ -5,6 +5,7 @@ import "./globals.css"; // Ensure Tailwind CSS is imported here
 import { Inter } from "next/font/google";
 import { Metadata } from 'next';
 import Footer from '../components/Footer';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           {/* Adjust padding and max-width responsively for smaller screens */}
           <main className="flex-grow mx-auto p-4 sm:px-6 lg:px-8 max-w-6xl lg w-full">
             {children}
+            <SpeedInsights/>
           </main>
           <Footer/>
         </Provider>
