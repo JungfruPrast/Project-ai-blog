@@ -21,6 +21,13 @@ interface Params {
     searchParams: {[key: string]: string | string[] | undefined};
 }
 
+export async function generateStaticParams() {
+  const allPosts = await client.fetch(`*[_type == "post"]{ "slug": slug.current }`);
+  return allPosts.map((post: Post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
 async function getPost(slug: string) {
     const query = `
     *[_type == "post" && slug.current == "${slug}"][0] {

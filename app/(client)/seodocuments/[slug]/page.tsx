@@ -24,6 +24,13 @@ interface Params {
     searchParams: {[key: string]: string | string[] | undefined};
 }
 
+export async function generateStaticParams() {
+  const allSEODocuments = await client.fetch(`*[_type == "seo"]{ "slug": slug.current }`);
+  return allSEODocuments.map((seo: SEO) => ({
+    params: { slug: seo.slug },
+  }));
+}
+
 async function getSEOData(slug: string) {
     const query = `
     *[_type == "seo" && slug.current == "${slug}"][0] {
