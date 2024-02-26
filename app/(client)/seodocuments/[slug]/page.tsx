@@ -331,7 +331,20 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
       </div>
     ),
   },
-  // You may add other custom serializers as needed
+  marks: {
+    link: ({ value, children }) => {
+      const { href, newWindow } = value;
+      const target = newWindow ? '_blank' : undefined;
+      const rel = target ? 'noopener noreferrer' : undefined;
+      return (
+        <a href={href} target={target} rel={rel}>
+          {children}
+        </a>
+      );
+    },
+    // Add other custom serializers for marks as needed
+  },
+  // Add other custom serializers as needed
 };
   
   const richTextStyles = `

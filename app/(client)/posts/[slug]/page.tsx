@@ -247,94 +247,107 @@ text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
 
 // Updated serializer to include new window functionality for links
 const myPortableTextComponents: Partial<PortableTextProps['components']> = {
-types: {
-  block: ({ value }: { value: Block }) => {
-    const { style, _key, children, markDefs } = value;
+  types: {
+    block: ({ value }: { value: Block }) => {
+      const { style, _key, children, markDefs } = value;
 
-    const renderText = (text: string, marks?: string[]): JSX.Element | string => {
-      if (!marks || marks.length === 0) return text;
+      const renderText = (text: string, marks?: string[]): JSX.Element | string => {
+        if (!marks || marks.length === 0) return text;
 
-      return marks.reduce((acc: JSX.Element | string, mark: string) => {
-        const markDef = markDefs.find((def) => def._key === mark);
-        if (markDef?._type === 'link') {
-          if (markDef.href) {
-            // Open in new window if newWindow is true
-            const target = markDef.newWindow ? '_blank' : undefined;
-            const rel = target ? 'noopener noreferrer' : undefined;
-            return (
-              <a href={markDef.href} target={target} rel={rel} key={markDef._key}>
-                {acc}
-              </a>
-            );
+        return marks.reduce((acc: JSX.Element | string, mark: string) => {
+          const markDef = markDefs.find((def) => def._key === mark);
+          if (markDef?._type === 'link') {
+            if (markDef.href) {
+              // Open in new window if newWindow is true
+              const target = markDef.newWindow ? '_blank' : undefined;
+              const rel = target ? 'noopener noreferrer' : undefined;
+              return (
+                <a href={markDef.href} target={target} rel={rel} key={markDef._key}>
+                  {acc}
+                </a>
+              );
+            }
           }
-        }
-        // Handle other marks like 'strong' and 'em'
-        switch (mark) {
-          case 'strong':
-            return <strong key={_key}>{acc}</strong>;
-          case 'em':
-            return <em key={_key}>{acc}</em>;
-          default:
-            return acc;
-        }
-      }, text);
-    };
+          // Handle other marks like 'strong' and 'em'
+          switch (mark) {
+            case 'strong':
+              return <strong key={_key}>{acc}</strong>;
+            case 'em':
+              return <em key={_key}>{acc}</em>;
+            default:
+              return acc;
+          }
+        }, text);
+      };
 
-    const renderChildren = (children: Span[]): JSX.Element[] =>
-      children.map((child: Span, index: number) => (
-        <span key={child._key || index.toString()}>
-          {renderText(child.text, child.marks)}
-        </span>
-      ));
+      const renderChildren = (children: Span[]): JSX.Element[] =>
+        children.map((child: Span, index: number) => (
+          <span key={child._key || index.toString()}>
+            {renderText(child.text, child.marks)}
+          </span>
+        ));
 
-    if (/^h[1-6]$/.test(style)) {
-      const headingId = generateSlug(children?.[0]?.text.toString()) || `heading-${_key}`;
-      const HeadingTag = style as keyof JSX.IntrinsicElements;
-      return React.createElement(HeadingTag, { id: headingId, key: _key }, renderChildren(children));
-    }
+      if (/^h[1-6]$/.test(style)) {
+        const headingId = generateSlug(children?.[0]?.text.toString()) || `heading-${_key}`;
+        const HeadingTag = style as keyof JSX.IntrinsicElements;
+        return React.createElement(HeadingTag, { id: headingId, key: _key }, renderChildren(children));
+      }
 
-    return <p key={_key}>{renderChildren(children)}</p>;
+      return <p key={_key}>{renderChildren(children)}</p>;
+    },
+    image: ({ value }) => (
+      <Image
+        src={urlForImage(value).url()}
+        alt={value.alt || 'Post Image'}
+        width={700}
+        height={700}
+        layout='responsive'
+      />
+    ),
+    codeBlock: ({ value }: { value: CodeBlockValue }) => (
+      <div className="relative">
+      <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-inherit shadow-md dark:bg-inherit dark:shadow-gray-700">
+        <code className="language-javascript">{value.code}</code>
+      </pre>
+      <div className="absolute bottom-0 right-0 m-2">
+        <CopyToClipboard textToCopy={value.code} />
+      </div>
+    </div>
+    ),
+
+    table: ({ value }: { value: Table }) => (
+      // Wrap the table in a div with overflow-x-auto to allow horizontal scrolling on small screens
+      <div className="overflow-x-auto custom-scrollbar">
+        <table className="min-w-full divide-y divide-gray-200 ">
+          <tbody className="divide-y divide-gray-200">
+            {value.rows.map((row, rowIndex) => (
+              <tr key={row._key || rowIndex}>
+                {row.cells.map((cellContent, cellIndex) => (
+                  <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm">
+                    {cellContent} {/* Directly render the string content of the cell */}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ),
   },
-  image: ({ value }) => (
-    <Image
-      src={urlForImage(value).url()}
-      alt={value.alt || 'Post Image'}
-      width={700}
-      height={700}
-      layout='responsive'
-    />
-  ),
-  codeBlock: ({ value }: { value: CodeBlockValue }) => (
-    <div className="relative">
-    <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-inherit shadow-md dark:bg-inherit dark:shadow-gray-700">
-      <code className="language-javascript">{value.code}</code>
-    </pre>
-    <div className="absolute bottom-0 right-0 m-2">
-      <CopyToClipboard textToCopy={value.code} />
-    </div>
-  </div>
-  ),
-
-  table: ({ value }: { value: Table }) => (
-    // Wrap the table in a div with overflow-x-auto to allow horizontal scrolling on small screens
-    <div className="overflow-x-auto custom-scrollbar">
-      <table className="min-w-full divide-y divide-gray-200 ">
-        <tbody className="divide-y divide-gray-200">
-          {value.rows.map((row, rowIndex) => (
-            <tr key={row._key || rowIndex}>
-              {row.cells.map((cellContent, cellIndex) => (
-                <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm">
-                  {cellContent} {/* Directly render the string content of the cell */}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  ),
-},
-// You may add other custom serializers as needed
+  marks: {
+    link: ({ value, children }) => {
+      const { href, newWindow } = value;
+      const target = newWindow ? '_blank' : undefined;
+      const rel = target ? 'noopener noreferrer' : undefined;
+      return (
+        <a href={href} target={target} rel={rel}>
+          {children}
+        </a>
+      );
+    },
+    // Add other custom serializers for marks as needed
+  },
+  // Add other custom serializers as needed
 };
 
 const richTextStyles = `
