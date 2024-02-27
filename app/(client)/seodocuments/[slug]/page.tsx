@@ -15,7 +15,6 @@ import LeftSideNavbar from "@/app/components/LeftSideNavbar";
 import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
 import { ResolvingMetadata } from "next";
 import { Metadata } from "next";
-import { SanityClient } from "sanity";
 
 interface Params {
     params: {
@@ -146,7 +145,7 @@ const SEOPage = async ({ params }: Params) => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}/>
        
         <div className="flex flex-col lg:flex-row min-h-screen">
-            <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
+            <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
              <ResponsiveSidebarWrapper>
               <LeftSideNavbar/>
             </ResponsiveSidebarWrapper>
@@ -185,7 +184,7 @@ const SEOPage = async ({ params }: Params) => {
                 </div>
             </article>
             {headings && headings.length > 0 && (
-               <div className="hidden lg:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto text-sm custom-scrollbar flex-shrink-0 w-60">
+               <div className="hidden lg:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-60">
               <TableOfContents headings={headings}/>
               </div>
         )}
@@ -374,7 +373,3 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
   prose-code:text-red-500
   
   `;
-
-function imageUrlBuilder(client: SanityClient) {
-  throw new Error("Function not implemented.");
-}
