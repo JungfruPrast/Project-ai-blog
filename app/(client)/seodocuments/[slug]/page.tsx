@@ -11,10 +11,11 @@ import notFound from "./not-found";
 import CopyToClipboard from "@/app/components/CopytoClipboard";
 import { PortableTextProps } from "@portabletext/react";
 import { SEO } from "@/app/utils.tsx/Interface";
-import LeftSideNavbar from "@/app/components/LeftSideNavbar";
+import LeftSideNavbar, { SEODocument } from "@/app/components/LeftSideNavbar";
 import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
 import { ResolvingMetadata } from "next";
 import { Metadata } from "next";
+import { getCache, setCache } from "@/app/utils.tsx/cache";
 
 interface Params {
     params: {
@@ -30,8 +31,27 @@ export async function generateStaticParams() {
   }));
 }
 
+//fetch function for generating links for the leftsidenavbar component. 
+async function fetchSEOLinksTitles() {
+  const query = `
+      *[_type == "seo"] | order(publishedAt asc) {
+          title,
+          "slug": slug.current
+        }
+      `;
+  const documents: SEODocument[] = await client.fetch(query);
+  return documents
+}
+
 async function getSEOData(slug: string) {
-    const query = `
+  // Attempt to retrieve the cached data
+  const cachedData = getCache(slug);
+  if (cachedData) {
+    return cachedData; // Return the cached data if it exists
+  }
+  
+  // Define the query to fetch data from Sanity
+  const query = `
     *[_type == "seo" && slug.current == "${slug}"][0] {
       title,
       slug,
@@ -45,13 +65,16 @@ async function getSEOData(slug: string) {
           name
         }
     }
-    `;
+  `;
 
-    const seoData = await client.fetch(query);
-    return seoData;
+  // Fetch the data from Sanity if not found in cache
+  const seoData = await client.fetch(query);
+
+  // Cache the fetched data before returning
+  setCache(slug, seoData, 6000); // Assuming TTL is 600 seconds (10 minutes)
+
+  return seoData;
 }
-
-export const revalidate = 600;
 
 interface BaseBlock {
   _type: string;
@@ -104,6 +127,7 @@ export async function generateMetadata({ params }: { params: { slug: string } },
 
 const SEOPage = async ({ params }: Params) => {
     const seoData: SEO = await getSEOData(params?.slug);
+    const links: SEODocument[] = await fetchSEOLinksTitles()
 
     if (!seoData) {
         notFound(); 
@@ -147,7 +171,7 @@ const SEOPage = async ({ params }: Params) => {
         <div className="flex flex-col lg:flex-row min-h-screen">
             <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
              <ResponsiveSidebarWrapper>
-              <LeftSideNavbar/>
+              <LeftSideNavbar seoDocuments={links}/>
             </ResponsiveSidebarWrapper>
             </div>
             <article className="flex-grow flex flex-col items-center">

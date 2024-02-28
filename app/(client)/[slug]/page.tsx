@@ -45,6 +45,13 @@ const fetchPageData = async (slug: string): Promise<PageData> => {
 
 export const revalidate = 600;
 
+export async function generateStaticParams() {
+  const allPages = await client.fetch(`*[_type == "page"]{ "slug": slug.current }`);
+  return allPages.map((pagedata: PageData) => ({
+    params: { slug: pagedata.slug },
+  }));
+}
+
 // Adjust parameters to match expected types and structure
 interface Params {
   params: {
