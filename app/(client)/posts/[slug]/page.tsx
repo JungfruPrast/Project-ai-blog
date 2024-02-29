@@ -29,7 +29,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function getPost(slug: string) {
+ async function getPost(slug: string) {
     const cachedData = getCache(slug);
       if (cachedData) {
         return cachedData;

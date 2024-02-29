@@ -50,7 +50,7 @@ async function fetchSEOLinksTitles() {
   }
 }
 
-export async function getSEOData(slug: string) {
+ async function getSEOData(slug: string) {
   // Attempt to retrieve the cached data
   const cachedData = getCache(slug);
   if (cachedData) {
