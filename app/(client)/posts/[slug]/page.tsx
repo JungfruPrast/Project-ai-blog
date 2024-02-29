@@ -12,6 +12,7 @@ import TableOfContents from '@/app/components/ToC';
 import { extractAndNestHeadingsFromBody } from '@/app/components/ToC';
 import { notFound } from 'next/navigation';
 import CopyToClipboard from '@/app/components/CopytoClipboard';
+import { getCache, setCache } from '@/app/utils.tsx/cache';
 
 //defining the parameters of the query function
 interface Params {
@@ -28,7 +29,12 @@ export async function generateStaticParams() {
   }));
 }
 
-async function getPost(slug: string) {
+export async function getPost(slug: string) {
+    const cachedData = getCache(slug);
+      if (cachedData) {
+        return cachedData;
+      }
+
     const query = `
     *[_type == "post" && slug.current == "${slug}"][0] {
       title,
@@ -47,11 +53,9 @@ async function getPost(slug: string) {
     `;
 
 const post = await client.fetch(query);
+setCache(slug, post, 6000)
 return post;
 }
-
-//acts as refresh for any changes made within the content 
-export const revalidate = 600;
 
 interface BaseBlock {
   _type: string;

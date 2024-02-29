@@ -19,7 +19,7 @@ async function fetchDocuments(): Promise<DocumentData[]> {
 
 async function generateSitemapEntries(): Promise<MetadataRoute.Sitemap> {
   const documents = await fetchDocuments();
-  const rootUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://project-ai-blog.vercel.app/';
+  const rootUrl = process.env.NEXT_PUBLIC_BASE_URL;
   
   return documents.map(({ _type, slug, updatedAt }) => {
     const pathPrefix = _type === 'seo' ? '/seodocuments' : '/posts';

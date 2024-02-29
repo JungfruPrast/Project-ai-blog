@@ -33,17 +33,24 @@ export async function generateStaticParams() {
 
 //fetch function for generating links for the leftsidenavbar component. 
 async function fetchSEOLinksTitles() {
-  const query = `
-      *[_type == "seo"] | order(publishedAt asc) {
-          title,
-          "slug": slug.current
-        }
-      `;
-  const documents: SEODocument[] = await client.fetch(query);
-  return documents
+  // Provide a fallback to localhost if NEXT_PUBLIC_BASE_URL is not defined
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const apiUrl = `${baseUrl}/api/routes`; // Ensure this endpoint matches your API route
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch SEO links titles from ${apiUrl}`);
+    }
+    const documents = await response.json();
+    return documents;
+  } catch (error) {
+    console.error('Error fetching SEO documents:', error);
+    throw error; // Re-throw the error to handle it in the calling code if necessary
+  }
 }
 
-async function getSEOData(slug: string) {
+export async function getSEOData(slug: string) {
   // Attempt to retrieve the cached data
   const cachedData = getCache(slug);
   if (cachedData) {
@@ -71,7 +78,7 @@ async function getSEOData(slug: string) {
   const seoData = await client.fetch(query);
 
   // Cache the fetched data before returning
-  setCache(slug, seoData, 6000); // Assuming TTL is 600 seconds (10 minutes)
+  setCache(slug, seoData, 6000); // Assuming TTL is 6000 seconds (100 minutes)
 
   return seoData;
 }
