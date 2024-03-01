@@ -12,7 +12,7 @@ import TableOfContents from '@/app/components/ToC';
 import { extractAndNestHeadingsFromBody } from '@/app/components/ToC';
 import { notFound } from 'next/navigation';
 import CopyToClipboard from '@/app/components/CopytoClipboard';
-import { getCache, setCache } from '@/app/utils.tsx/cache';
+import { fetchDataWithLock } from '@/app/utils.tsx/cache';
 
 //defining the parameters of the query function
 interface Params {
@@ -21,7 +21,7 @@ interface Params {
     };
     searchParams: {[key: string]: string | string[] | undefined};
 }
-
+//Tells vercel to pre-render the route of this page on the server before serving it as a static html
 export async function generateStaticParams() {
   const allPosts = await client.fetch(`*[_type == "post"]{ "slug": slug.current }`);
   return allPosts.map((post: Post) => ({
@@ -29,14 +29,12 @@ export async function generateStaticParams() {
   }));
 }
 
- async function getPost(slug: string) {
-    const cachedData = getCache(slug);
-      if (cachedData) {
-        return cachedData;
-      }
-
+async function getPost(slug: string) {
+  // Use fetchDataWithLock to handle the caching and potential concurrent fetches
+  return fetchDataWithLock(slug, async () => {
+    // Define the query to fetch data from Sanity
     const query = `
-    *[_type == "post" && slug.current == "${slug}"][0] {
+		  *[_type == "post" && slug.current == "${slug}"][0] {
       title,
       slug,
       publishedAt,
@@ -52,9 +50,12 @@ export async function generateStaticParams() {
     }
     `;
 
-const post = await client.fetch(query);
-setCache(slug, post, 6000)
-return post;
+    // Directly fetch the data from Sanity
+    const post= await client.fetch(query);
+
+    // No need to explicitly call setCache here as fetchDataWithLock will handle it
+    return post;
+  }, 6000); // Assuming TTL is 6000 seconds (100 minutes)
 }
 
 interface BaseBlock {

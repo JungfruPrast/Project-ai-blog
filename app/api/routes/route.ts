@@ -14,10 +14,10 @@ async function fetchSEOLinksTitles() {
           }
         `;
     const documents: SEODocument[] = await client.fetch(query);
-    return documents
-  }
+    return documents;
+}
 
-  // Modified GET function
+// Modified GET function
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const cacheKey = 'seoLinksTitles';
   let data = getCache(cacheKey);
@@ -44,9 +44,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
   }
 
-  // Return the data in a NextResponse
+  // Return the data in a NextResponse with Cache-Control header
   return new NextResponse(JSON.stringify(data), {
     status: 200,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      // Example Cache-Control header for caching; adjust max-age as needed
+      'Cache-Control': 'public, max-age=3600, must-revalidate'
+    },
   });
 }

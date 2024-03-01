@@ -15,7 +15,7 @@ import LeftSideNavbar, { SEODocument } from "@/app/components/LeftSideNavbar";
 import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
 import { ResolvingMetadata } from "next";
 import { Metadata } from "next";
-import { getCache, setCache } from "@/app/utils.tsx/cache";
+import { fetchDataWithLock } from "@/app/utils.tsx/cache";
 
 interface Params {
     params: {
@@ -50,37 +50,32 @@ async function fetchSEOLinksTitles() {
   }
 }
 
- async function getSEOData(slug: string) {
-  // Attempt to retrieve the cached data
-  const cachedData = getCache(slug);
-  if (cachedData) {
-    return cachedData; // Return the cached data if it exists
-  }
-  
-  // Define the query to fetch data from Sanity
-  const query = `
-    *[_type == "seo" && slug.current == "${slug}"][0] {
-      title,
-      slug,
-      publishedAt,
-      updatedAt,
-      excerpt,
-      _id,
-      body,
-      "tags": tags[]-> {
-          _id,
-          name
-        }
-    }
-  `;
+async function getSEOData(slug: string) {
+  // Use fetchDataWithLock to handle the caching and potential concurrent fetches
+  return fetchDataWithLock(slug, async () => {
+    // Define the query to fetch data from Sanity
+    const query = `
+      *[_type == "seo" && slug.current == "${slug}"][0] {
+        title,
+        slug,
+        publishedAt,
+        updatedAt,
+        excerpt,
+        _id,
+        body,
+        "tags": tags[]-> {
+            _id,
+            name
+          }
+      }
+    `;
 
-  // Fetch the data from Sanity if not found in cache
-  const seoData = await client.fetch(query);
+    // Directly fetch the data from Sanity
+    const seoData = await client.fetch(query);
 
-  // Cache the fetched data before returning
-  setCache(slug, seoData, 6000); // Assuming TTL is 6000 seconds (100 minutes)
-
-  return seoData;
+    // No need to explicitly call setCache here as fetchDataWithLock will handle it
+    return seoData;
+  }, 6000); // Assuming TTL is 6000 seconds (100 minutes)
 }
 
 interface BaseBlock {
@@ -176,11 +171,16 @@ const SEOPage = async ({ params }: Params) => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}/>
        
         <div className="flex flex-col lg:flex-row min-h-screen">
-            <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
-             <ResponsiveSidebarWrapper>
-              <LeftSideNavbar seoDocuments={links}/>
-            </ResponsiveSidebarWrapper>
+        <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
+          <ResponsiveSidebarWrapper>
+            <LeftSideNavbar seoDocuments={links}/>
+            {headings && headings.length > 0 && (
+             <div className="lg:hidden block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-full">
+                <TableOfContents headings={headings}/>
             </div>
+              )}
+          </ResponsiveSidebarWrapper>
+        </div>
             <article className="flex-grow flex flex-col items-center">
                 <Header title={seoData?.title}/>
                 <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
