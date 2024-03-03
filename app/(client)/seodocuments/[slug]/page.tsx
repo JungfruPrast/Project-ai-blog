@@ -372,7 +372,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
         </a>
       );
     },
-    // Add other custom serializers for marks as needed
+    'strike-through': ({ children }) => <del>{children}</del>,
   },
   // Add other custom serializers as needed
 };
