@@ -1,3 +1,5 @@
+// File: /middleware.ts (or /middleware.js)
+
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
@@ -8,22 +10,15 @@ export function middleware(request: NextRequest) {
     const response = NextResponse.next();
 
     // Security Headers
-    // 1. Strict Transport Security (HSTS)
     response.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
-
-    // 2. X-Frame-Options
     response.headers.set("X-Frame-Options", "DENY");
-
-    // 3. Referrer-Policy
     response.headers.set("Referrer-Policy", "no-referrer-when-downgrade");
-
-    // 4. Permissions-Policy
     response.headers.set("Permissions-Policy", "microphone=()");
 
-    // 5. Content Security Policy (CSP)
+    // Content Security Policy (CSP) with nonce
     const cspHeader = `
         default-src 'self';
-        script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
+        script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://project-ai-blog.vercel.app/_next/static/chunks/;
         style-src 'self' 'nonce-${nonce}';
         img-src 'self' blob: data:;
         font-src 'self';
@@ -39,3 +34,12 @@ export function middleware(request: NextRequest) {
 
     return response;
 }
+
+export const config = {
+  matcher: [
+    '/:slug*', // Assuming dynamic [slug].tsx under the app folder or specific handling
+    '/posts/:path*', // Assuming /app/posts folder with index.tsx or [...path].tsx for nested routes
+    '/tag/:path*', // Assuming /app/tag folder with index.tsx or [...path].tsx for nested routes
+    '/seodocuments/:path*', // Assuming /app/seodocuments folder with index.tsx or [...path].tsx for nested routes
+  ],
+};
