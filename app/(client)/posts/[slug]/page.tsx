@@ -109,6 +109,24 @@ export async function generateMetadata({ params }: { params: { slug: string } },
     // Add other metadata fields as needed e.g opengraph 
 };
 
+interface TextChild {
+  text: string;
+}
+
+interface TextBlock {
+  children: TextChild[];
+}
+
+// If your actual data structure is more complex, you might need to adjust these interfaces accordingly.
+const calculateReadingTime = (textBlocks: TextBlock[]): number => {
+  const wordsPerMinute = 200; // Average reading speed
+  const wordCount = textBlocks
+    .flatMap(block => block.children.map(child => child.text))
+    .join(' ')
+    .split(/\s+/).length;
+  const readingTime = Math.ceil(wordCount / wordsPerMinute);
+  return readingTime;
+};
 
 //page is generated from getPost 
 const page = async ({params}: Params) => {
@@ -119,8 +137,8 @@ const page = async ({params}: Params) => {
     }
 
     const headings = extractAndNestHeadingsFromBody(post.body)
-
     const imageUrl = findFirstImageUrl(post.body);
+    const readingTime = calculateReadingTime(post.body);
     
     const jsonLd = {
       "@context": "http://schema.org",
@@ -158,16 +176,22 @@ const page = async ({params}: Params) => {
     <div className="flex flex-col lg:flex-row min-h-screen">
         <article className="flex-grow flex flex-col items-center">
             <Header title={post?.title}/>
+            <Link href='/about' className='author-link'>Ezra Leong</Link>
             <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
             <div className="date-info">
-          <time className="published-date" dateTime={post?.publishedAt}>
-             Published on: {new Date(post?.publishedAt).toDateString()}
-              </time>
+               <time className="published-date" dateTime={post?.publishedAt}>
+                Published on: {new Date(post?.publishedAt).toDateString()}
+               </time>
                {post?.updatedAt && new Date(post?.updatedAt).toDateString() !== new Date(post?.publishedAt).toDateString() && (
                  <time className="updated-date" dateTime={post?.updatedAt}>
                   <br />Updated on: {new Date(post?.updatedAt).toDateString()}
                   </time>
                   )}
+                </div>
+                <div className="reading-time">
+                        <div className="text-sm">
+                          Reading time: {readingTime} minutes
+                        </div>
                 </div>
                 <div className='mt-5'>
                     {post?.tags?.map((tag) => {

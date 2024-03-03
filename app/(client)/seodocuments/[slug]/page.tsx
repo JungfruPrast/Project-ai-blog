@@ -127,6 +127,26 @@ export async function generateMetadata({ params }: { params: { slug: string } },
   };
 }
 
+interface TextChild {
+  text: string;
+}
+
+interface TextBlock {
+  children: TextChild[];
+}
+
+// If your actual data structure is more complex, you might need to adjust these interfaces accordingly.
+const calculateReadingTime = (textBlocks: TextBlock[]): number => {
+  const wordsPerMinute = 200; // Average reading speed
+  const wordCount = textBlocks
+    .flatMap(block => block.children.map(child => child.text))
+    .join(' ')
+    .split(/\s+/).length;
+  const readingTime = Math.ceil(wordCount / wordsPerMinute);
+  return readingTime;
+};
+
+
 const SEOPage = async ({ params }: Params) => {
     const seoData: SEO = await getSEOData(params?.slug);
     const links: SEODocument[] = await fetchSEOLinksTitles()
@@ -137,7 +157,8 @@ const SEOPage = async ({ params }: Params) => {
 
     const headings = extractAndNestHeadingsFromBody(seoData.body);
     const imageUrl = findFirstImageUrl(seoData.body);
-    
+    const readingTime = calculateReadingTime(seoData.body);
+
     const jsonLd = {
       "@context": "http://schema.org",
       "@type": "Article",
@@ -183,6 +204,7 @@ const SEOPage = async ({ params }: Params) => {
         </div>
             <article className="flex-grow flex flex-col items-center">
                 <Header title={seoData?.title}/>
+                <Link href='/about' className='author-link'>Ezra Leong</Link>
                 <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
                 <div className="date-info">
                   <time className="published-date" dateTime={seoData?.publishedAt}>
@@ -193,6 +215,11 @@ const SEOPage = async ({ params }: Params) => {
                         <br />Updated on: {new Date(seoData?.updatedAt).toDateString()}
                       </time>
                       )}
+                      <div className="reading-time">
+                        <div className="text-sm">
+                          Reading time: {readingTime} minutes
+                        </div>
+                    </div>
                     </div>
                     <div className='mt-5'>
                         {seoData?.tags?.map((tag) => {
