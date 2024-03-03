@@ -139,7 +139,7 @@ interface TextBlock {
 const calculateReadingTime = (textBlocks: TextBlock[]): number => {
   const wordsPerMinute = 200; // Average reading speed
   const wordCount = textBlocks
-    .flatMap(block => block.children.map(child => child.text))
+    .flatMap(block => block.children?.map(child => child.text))
     .join(' ')
     .split(/\s+/).length;
   const readingTime = Math.ceil(wordCount / wordsPerMinute);
@@ -204,9 +204,11 @@ const SEOPage = async ({ params }: Params) => {
         </div>
             <article className="flex-grow flex flex-col items-center">
                 <Header title={seoData?.title}/>
-                <Link href='/about' className='author-link'>Ezra Leong</Link>
+                
                 <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
-                <div className="date-info">
+                  <div className="text-sm">
+                    <Link href='/about' className='author-link'>By Ezra Leong</Link>
+                     <div className="date-info">
                   <time className="published-date" dateTime={seoData?.publishedAt}>
                     Published on: {new Date(seoData?.publishedAt).toDateString()}
                   </time>
@@ -221,6 +223,7 @@ const SEOPage = async ({ params }: Params) => {
                         </div>
                     </div>
                     </div>
+                  </div>
                     <div className='mt-5'>
                         {seoData?.tags?.map((tag) => {
                            if (!tag || !tag.slug || !tag.slug.current) {

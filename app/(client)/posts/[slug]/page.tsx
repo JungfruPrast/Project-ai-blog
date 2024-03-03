@@ -121,7 +121,7 @@ interface TextBlock {
 const calculateReadingTime = (textBlocks: TextBlock[]): number => {
   const wordsPerMinute = 200; // Average reading speed
   const wordCount = textBlocks
-    .flatMap(block => block.children.map(child => child.text))
+    .flatMap(block => block.children?.map(child => child.text))
     .join(' ')
     .split(/\s+/).length;
   const readingTime = Math.ceil(wordCount / wordsPerMinute);
@@ -176,23 +176,25 @@ const page = async ({params}: Params) => {
     <div className="flex flex-col lg:flex-row min-h-screen">
         <article className="flex-grow flex flex-col items-center">
             <Header title={post?.title}/>
-            <Link href='/about' className='author-link'>Ezra Leong</Link>
+            
             <div className='text-center w-full sm:max-w-prose md:max-w-2xl mx-auto'>
-            <div className="date-info">
+              <div className='text-sm'>
+                <Link href='/about' className='author-link'>By Ezra Leong</Link>
+                <div className="date-info">
                <time className="published-date" dateTime={post?.publishedAt}>
                 Published on: {new Date(post?.publishedAt).toDateString()}
                </time>
                {post?.updatedAt && new Date(post?.updatedAt).toDateString() !== new Date(post?.publishedAt).toDateString() && (
                  <time className="updated-date" dateTime={post?.updatedAt}>
                   <br />Updated on: {new Date(post?.updatedAt).toDateString()}
-                  </time>
+                </time>
                   )}
-                </div>
+            </div>
                 <div className="reading-time">
-                        <div className="text-sm">
                           Reading time: {readingTime} minutes
-                        </div>
-                </div>
+              </div>
+              </div>
+            
                 <div className='mt-5'>
                     {post?.tags?.map((tag) => {
                         if (!tag || !tag.slug || !tag.slug.current) {
