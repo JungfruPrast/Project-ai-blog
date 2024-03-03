@@ -2,8 +2,8 @@ import { SEODocument } from "../../components/LeftSideNavbar";
 import { client } from "@/sanity/lib/client";
 import { NextRequest, NextResponse } from "next/server";
 import { setCache, getCache } from "../../utils.tsx/cache";
-
-// At the top of your route.ts file
+//Caching mechanism is completely invalidated due to serverless function that eliminates the memory file once the instance is completed. LOL
+// At the top of your route.ts file 
 const ongoingFetches = new Map();
 
 async function fetchSEOLinksTitles() {

@@ -55,7 +55,7 @@ async function getPost(slug: string) {
 
     // No need to explicitly call setCache here as fetchDataWithLock will handle it
     return post;
-  }, 6000); // Assuming TTL is 6000 seconds (100 minutes)
+  }, 3600); // Assuming TTL is 6000 seconds (100 minutes)
 }
 
 interface BaseBlock {
@@ -378,6 +378,6 @@ prose-li:ml-4
 prose-a:text-gray-500 
 prose-a:italic
 prose-a:underline
-prose-code:text-red-500
+prose-code:text-black
 
 `;

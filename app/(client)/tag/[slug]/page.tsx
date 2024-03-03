@@ -24,7 +24,7 @@ async function getPostsAndSEOByTag(tag: string) {
   return posts;
 }
 
-export const revalidate = 600;
+export const revalidate = 3600;
 
 interface Params {
   params: {

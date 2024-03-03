@@ -63,7 +63,7 @@ const Navbar = () => {
 
         {/* Burger Icon for Mobile */}
         <div className='md:hidden flex items-center space-x-3 font-semibold text-sm'>
-          <button onClick={toggleMobileMenu}>
+          <button onClick={toggleMobileMenu} aria-label="Open menu">
             {/* SVG for burger icon */}
             <svg className="w-6 h-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
               <path d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -81,7 +81,7 @@ const Navbar = () => {
          
           {/* SEO Documents Dropdown for Desktop */}
           <div className='relative'>
-            <button onClick={toggleSEODropdown} className='flex items-center px-3 py-2'>
+            <button onClick={toggleSEODropdown} aria-label="Open SEO Docs" className='flex items-center px-3 py-2'>
               SEO Docs
               {isSEODropdownOpen ? <DownwardToggleIcon /> : <RightSideToggleIcon />}
             </button>

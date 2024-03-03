@@ -75,7 +75,7 @@ async function getSEOData(slug: string) {
 
     // No need to explicitly call setCache here as fetchDataWithLock will handle it
     return seoData;
-  }, 6000); // Assuming TTL is 6000 seconds (100 minutes)
+  }, 3600); // Assuming TTL is 6000 seconds (100 minutes)
 }
 
 interface BaseBlock {
