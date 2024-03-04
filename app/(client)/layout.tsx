@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 import { Metadata } from 'next';
 import Footer from '../components/Footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleTagManager } from '@next/third-parties/google';
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white dark:selection:bg-purple-700`}>
         <GoogleTagManager gtmId='GTM-WCXLPWX5'/>
+        <GoogleAnalytics gaId='G-2ECVK3001W'/>
         <Provider>
           <Navbar />
           {/* Adjust padding and max-width responsively for smaller screens */}
