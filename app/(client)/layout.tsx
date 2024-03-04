@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import Footer from '../components/Footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,13 +25,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white dark:selection:bg-purple-700`}>
-        <GoogleTagManager gtmId='GTM-WCXLPWX5'/>
-        <GoogleAnalytics gaId='G-2ECVK3001W'/>
+        
         <Provider>
           <Navbar />
           {/* Adjust padding and max-width responsively for smaller screens */}
           <main className="flex-grow mx-auto p-4 sm:px-6 lg:px-8 max-w-6xl lg w-full">
             {children}
+            <Analytics />
+            <GoogleTagManager gtmId='GTM-WCXLPWX5'/>
+            <GoogleAnalytics gaId='G-2ECVK3001W'/>
             <SpeedInsights/>
           </main>
           <Footer/>
