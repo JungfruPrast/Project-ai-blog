@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white dark:selection:bg-purple-700`}>
+        <GoogleTagManager gtmId='GTM-WCXLPWX5'/>
         <Provider>
           <Navbar />
           {/* Adjust padding and max-width responsively for smaller screens */}
