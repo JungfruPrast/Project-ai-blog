@@ -191,6 +191,7 @@ const SEOPage = async ({ params }: Params) => {
     return (
       <>
         <Script
+          id="seo-structured-data"
           type="application/ld+json"
           nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}/>

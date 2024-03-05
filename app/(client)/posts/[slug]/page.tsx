@@ -175,6 +175,7 @@ const page = async ({params}: Params) => {
   return (
     <>
     <Script
+          id='pages-structured-data'
           type="application/ld+json"
           nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
