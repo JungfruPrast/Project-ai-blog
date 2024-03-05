@@ -14,6 +14,8 @@ import { notFound } from 'next/navigation';
 import CopyToClipboard from '@/app/components/CopytoClipboard';
 import { fetchDataWithLock } from '@/app/utils.tsx/cache';
 import ResponsiveSidebarWrapper from '@/app/components/ResponsiveSideBar';
+import { headers } from 'next/headers';
+import Script from 'next/script';
 
 //defining the parameters of the query function
 interface Params {
@@ -132,7 +134,8 @@ const calculateReadingTime = (textBlocks: TextBlock[]): number => {
 //page is generated from getPost 
 const page = async ({params}: Params) => {
     const post: Post = await getPost(params?.slug);
-  
+    const nonce = headers().get('x-nonce') || ""
+
     if (!post) {
        notFound();
     }
@@ -141,6 +144,7 @@ const page = async ({params}: Params) => {
     const imageUrl = findFirstImageUrl(post.body);
     const readingTime = calculateReadingTime(post.body);
     
+
     const jsonLd = {
       "@context": "http://schema.org",
       "@type": "Article",
@@ -170,8 +174,9 @@ const page = async ({params}: Params) => {
   //below the div className of portabletext is essentially uploads fetches the content you've written and displays it to the front end. 
   return (
     <>
-    <script
+    <Script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
     <div className="flex flex-col lg:flex-row min-h-screen">
@@ -218,14 +223,14 @@ const page = async ({params}: Params) => {
               
             </div>
         </article>
+      <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar flex-shrink-0 w-60 lg:block">
         <ResponsiveSidebarWrapper>
           {headings && headings.length > 0 && (
-            <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar flex-shrink-0 w-60 lg:block">
                 <TableOfContents headings={headings}/>
-            </div>
+            
           )}
         </ResponsiveSidebarWrapper>
-          
+       </div>   
     </div>
     </>
 );

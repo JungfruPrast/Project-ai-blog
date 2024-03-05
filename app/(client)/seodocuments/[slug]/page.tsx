@@ -16,6 +16,8 @@ import ResponsiveSidebarWrapper from "@/app/components/ResponsiveSideBar";
 import { ResolvingMetadata } from "next";
 import { Metadata } from "next";
 import { fetchDataWithLock } from "@/app/utils.tsx/cache";
+import Script from "next/script";
+import { headers } from "next/headers";
 
 interface Params {
     params: {
@@ -150,6 +152,7 @@ const calculateReadingTime = (textBlocks: TextBlock[]): number => {
 const SEOPage = async ({ params }: Params) => {
     const seoData: SEO = await getSEOData(params?.slug);
     const links: SEODocument[] = await fetchSEOLinksTitles()
+    const nonce = headers().get('x-nonce') || ""
 
     if (!seoData) {
         notFound(); 
@@ -187,8 +190,9 @@ const SEOPage = async ({ params }: Params) => {
 
     return (
       <>
-        <script
+        <Script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}/>
        
         <div className="flex flex-col lg:flex-row min-h-screen">
