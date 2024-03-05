@@ -26,12 +26,12 @@ interface Params {
     searchParams: {[key: string]: string | string[] | undefined};
 }
 
-export async function generateStaticParams() {
-  const allSEODocuments = await client.fetch(`*[_type == "seo"]{ "slug": slug.current }`);
-  return allSEODocuments.map((seo: SEO) => ({
-    params: { slug: seo.slug },
-  }));
-}
+//export async function generateStaticParams() {
+  //const allSEODocuments = await client.fetch(`*[_type == "seo"]{ "slug": slug.current }`);
+  //return allSEODocuments.map((seo: SEO) => ({
+    //params: { slug: seo.slug },
+  //}));
+//}
 
 //fetch function for generating links for the leftsidenavbar component. 
 async function fetchSEOLinksTitles() {

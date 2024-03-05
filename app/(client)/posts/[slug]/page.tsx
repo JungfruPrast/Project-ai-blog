@@ -25,12 +25,12 @@ interface Params {
     searchParams: {[key: string]: string | string[] | undefined};
 }
 //Tells vercel to pre-render the route of this page on the server before serving it as a static html
-export async function generateStaticParams() {
-  const allPosts = await client.fetch(`*[_type == "post"]{ "slug": slug.current }`);
-  return allPosts.map((post: Post) => ({
-    params: { slug: post.slug },
-  }));
-}
+//export async function generateStaticParams() {
+  //const allPosts = await client.fetch(`*[_type == "post"]{ "slug": slug.current }`);
+  //return allPosts.map((post: Post) => ({
+    //params: { slug: post.slug },
+  //}));
+//}
 
 async function getPost(slug: string) {
   // Use fetchDataWithLock to handle the caching and potential concurrent fetches
