@@ -13,6 +13,7 @@ import { extractAndNestHeadingsFromBody } from '@/app/components/ToC';
 import { notFound } from 'next/navigation';
 import CopyToClipboard from '@/app/components/CopytoClipboard';
 import { fetchDataWithLock } from '@/app/utils.tsx/cache';
+import ResponsiveSidebarWrapper from '@/app/components/ResponsiveSideBar';
 
 //defining the parameters of the query function
 interface Params {
@@ -217,11 +218,14 @@ const page = async ({params}: Params) => {
               
             </div>
         </article>
+        <ResponsiveSidebarWrapper>
           {headings && headings.length > 0 && (
             <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto text-sm custom-scrollbar flex-shrink-0 w-60 hidden lg:block">
                 <TableOfContents headings={headings}/>
             </div>
-        )}
+          )}
+        </ResponsiveSidebarWrapper>
+          
     </div>
     </>
 );
