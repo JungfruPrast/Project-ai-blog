@@ -25,7 +25,7 @@ interface Params {
     };
     searchParams: {[key: string]: string | string[] | undefined};
 }
-
+//issue definitely has to be with static pre-render from generate static params
 //export async function generateStaticParams() {
   //const allSEODocuments = await client.fetch(`*[_type == "seo"]{ "slug": slug.current }`);
   //return allSEODocuments.map((seo: SEO) => ({
