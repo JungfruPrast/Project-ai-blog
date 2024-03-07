@@ -72,7 +72,7 @@ export const SEO = {
                                         name: "internalLink",
                                         title: "Internal Link",
                                         type: "reference",
-                                        to: [{type: "post"}], // Adjust to your internal document types
+                                        to: [{type: "seo"}], // Adjust to your internal document types
                                         description: "Use for internal links",
                                     },
                                     {

@@ -158,7 +158,7 @@ const page = async ({params}: Params) => {
       "dateModified": post.updatedAt ? post.updatedAt : post.publishedAt,
       "author": {
         "@type": "Person",
-        "name": "Ezra" // Modify as needed
+        "name": "Ezra Leong" // Modify as needed
       },
       "publisher": {
         "@type": "Person",
