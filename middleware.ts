@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     img-src 'self' data: https://www.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com;
     style-src 'self' 'unsafe-inline' https://tagmanager.google.com https://fonts.googleapis.com;
     font-src 'self' https://fonts.gstatic.com;
-    connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://25ytbcan.api.sanity.io;
+    connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://25ytbcan.api.sanity.io https://project-ai-blog.vercel.app/api/routes;
     frame-src 'self' https://www.google.com;
     `.replace(/\s{2,}/g, " ").trim();
 
