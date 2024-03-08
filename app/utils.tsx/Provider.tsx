@@ -1,12 +1,23 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
+
 interface Props {
     children: React.ReactNode;
 }
 
 const Provider = ({children}: Props) => {
-    return <ThemeProvider attribute="class">{children}</ThemeProvider>
+    const [nonce, setNonce] = useState<string>("");
+
+    useEffect(() => {
+        // Access the nonce value from the meta tag in the document head
+        const nonceMetaTag = document.querySelector('meta[name="csp-nonce"]');
+        if (nonceMetaTag) {
+            setNonce(nonceMetaTag.getAttribute("content") || "");
+        }
+    }, []);
+
+    return <ThemeProvider attribute="class" nonce={nonce}>{children}</ThemeProvider>;
 }
 
-export default Provider
+export default Provider;
