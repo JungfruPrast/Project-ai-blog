@@ -6,8 +6,9 @@ import { Inter } from "next/font/google";
 import { Metadata } from 'next';
 import Footer from '../components/Footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
+import { headers } from 'next/headers';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const nonce = headers().get('x-nonce') || ""
+
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen bg-white text-black dark:bg-black dark:text-white dark:selection:bg-purple-700`}>
@@ -32,8 +36,25 @@ export default function RootLayout({
           <main className="flex-grow mx-auto p-4 sm:px-6 lg:px-8 max-w-6xl lg w-full">
             {children}
             <Analytics />
-            <GoogleTagManager gtmId='GTM-WCXLPWX5'/>
-            <GoogleAnalytics gaId='G-2ECVK3001W'/>
+            <Script 
+               src={`https://www.googletagmanager.com/gtag/js?id=GTM-WCXLPWX5`}
+               strategy="afterInteractive"
+               nonce={nonce} // Applying nonce to the script
+             />
+
+            <Script
+              strategy="afterInteractive"
+              nonce={nonce} // Applying nonce to the script
+              dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'GTM-WCXLPWX5');
+              `,
+              }}
+            />
             <SpeedInsights/>
           </main>
           <Footer/>
