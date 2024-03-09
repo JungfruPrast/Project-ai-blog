@@ -37,12 +37,14 @@ export default function RootLayout({
             {children}
             <Analytics />
             <Script 
+              id='Google-tag-manager'
                src={`https://www.googletagmanager.com/gtag/js?id=GTM-WCXLPWX5`}
                strategy="afterInteractive"
                nonce={nonce} // Applying nonce to the script
              />
 
             <Script
+              id="Google-analytics-ID"
               strategy="afterInteractive"
               nonce={nonce} // Applying nonce to the script
               dangerouslySetInnerHTML={{
