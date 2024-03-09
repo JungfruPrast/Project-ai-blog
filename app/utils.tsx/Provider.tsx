@@ -17,7 +17,7 @@ const Provider = ({children}: Props) => {
         }
     }, []);
 
-    return <ThemeProvider attribute="class" nonce={nonce} forcedTheme="dark">{children}</ThemeProvider>;
+    return <ThemeProvider attribute="class" nonce={nonce}>{children}</ThemeProvider>;
 }
 
 export default Provider;
