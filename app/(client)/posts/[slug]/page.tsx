@@ -224,15 +224,14 @@ const page = async ({params}: Params) => {
               
             </div>
         </article>
-        <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
-          <ResponsiveSidebarWrapper>
-            {headings && headings.length > 0 && (
-             <div className="lg:hidden block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-full">
+        <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm shrink-0 w-full lg:w-48">
+            <ResponsiveSidebarWrapper>
+                {headings && headings.length > 0 && (
                 <TableOfContents headings={headings}/>
-            </div>
-              )}
-          </ResponsiveSidebarWrapper>
-        </div> 
+               )}
+            </ResponsiveSidebarWrapper>
+          </div>
+
     </div>
     </>
 );
