@@ -5,13 +5,15 @@ import { SunIcon, MoonIcon } from './Icons';
 
 const ThemesSwitch = () => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(true);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  
+  if (!mounted) {
+    return(null)
+  }
 
   // Determine the appropriate label based on the current theme
   const buttonLabel = theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
