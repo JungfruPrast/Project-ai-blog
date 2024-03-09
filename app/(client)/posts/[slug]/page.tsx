@@ -224,7 +224,7 @@ const page = async ({params}: Params) => {
               
             </div>
         </article>
-        <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm shrink-0 w-full lg:w-48">
+        <div className="sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm shrink-0 w-full lg:w-60">
             <ResponsiveSidebarWrapper>
                 {headings && headings.length > 0 && (
                 <TableOfContents headings={headings}/>
