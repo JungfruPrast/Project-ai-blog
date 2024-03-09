@@ -5,7 +5,7 @@ import { SunIcon, MoonIcon } from './Icons';
 
 const ThemesSwitch = () => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
