@@ -19,6 +19,9 @@ interface PageData {
   body: any[]; // Adjust according to your content structure
 }
 
+//testing out this change. 
+export const dynamic = 'force-dynamic'
+
 // Adjust the function to fetch page data instead of post data
 const fetchPageData = async (slug: string): Promise<PageData> => {
   const query = `
