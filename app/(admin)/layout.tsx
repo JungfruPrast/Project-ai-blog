@@ -1,5 +1,8 @@
 import CMSNavbar from "../components/CMSNavbar"
 import Provider from "../utils.tsx/Provider"
+import { headers } from "next/headers"
+
+const nonce = headers().get('x-nonce') || ""
 
 export const metadata = {
   title: 'Project AI Blog',
@@ -14,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Provider>
+        <Provider nonce={nonce}>
       <CMSNavbar/>
         {children}
         </Provider>
