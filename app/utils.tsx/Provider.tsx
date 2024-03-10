@@ -13,7 +13,7 @@ const Provider = ({children}: Props) => {
         // Access the nonce value from the meta tag in the document head
         const nonceMetaTag = document.querySelector('meta[name="csp-nonce"]');
         if (nonceMetaTag) {
-            setNonce(nonceMetaTag.getAttribute("content") || "");
+            setNonce(nonceMetaTag.getAttribute("x-nonce") || "");
         }
     }, []);
 
