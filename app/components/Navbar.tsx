@@ -87,7 +87,7 @@ const Navbar = () => {
             </button>
             {isSEODropdownOpen && (
               <div className='absolute mt-2 py-2 w-48 bg-white shadow-md rounded-md dark:bg-black dark:shadow-gray-800 right-0 z-10'>
-                {seoDocuments.map((doc) => ( // Only take the first 5 documents - redacted
+                {seoDocuments.slice(0, 5).map((doc) => ( // Only take the first 5 documents - redacted
                   <Link key={doc.slug} href={`/seodocuments/${doc.slug}`} passHref>
                     <div className='block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-zinc-800'>{doc.title}</div>
                   </Link>
@@ -111,7 +111,7 @@ const Navbar = () => {
               SEO Docs
               {isSEODropdownOpen ? <DownwardToggleIcon /> : <RightSideToggleIcon />}
             </button>
-            {isSEODropdownOpen && seoDocuments.map((doc) => (
+            {isSEODropdownOpen && seoDocuments.slice(0, 5).map((doc) => (
               <Link key={doc.slug} href={`/seodocuments/${doc.slug}`} passHref>
                <div className='block pl-8 pr-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-zinc-800'>{doc.title}</div>
               </Link>
