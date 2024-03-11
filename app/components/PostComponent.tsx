@@ -9,12 +9,14 @@ interface Tag {
 
 export interface Document {
   _type: 'post' | 'seodocuments';  // Ensure this matches your document types in Sanity
-  _id: string;
   title: string;
-  slug: { current: string; };
-  publishedAt: string;
-  excerpt: string;
-  tags: Tag[];
+    slug: {current: string};
+    publishedAt: string;
+    updatedAt: string;
+    excerpt: string;
+    body: any;
+    tags: Array<Tag>;
+    _id: string;
 }
 
 // Define the Props interface expected by PostComponent
