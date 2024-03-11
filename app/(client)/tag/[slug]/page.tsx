@@ -3,7 +3,7 @@ import PostComponent from "@/app/components/PostComponent";
 import { client } from "@/sanity/lib/client";
 import { SEO } from "@/sanity/schemas/SEO";
 import React from "react";
-import { Document } from "@/app/components/PostComponent";
+import { Post } from "@/app/utils.tsx/Interface";
 
 async function getPostsAndSEOByTag(tag: string) {
   const query = `
@@ -34,14 +34,14 @@ interface Params {
 }
 
 const page = async ({ params }: Params) => {
-  const posts: Array<Document> = await getPostsAndSEOByTag(params.slug);
+  const posts: Array<Post> = await getPostsAndSEOByTag(params.slug);
   console.log(posts, SEO, "posts by tag");
   return (
     <div>
       <Header title={`${params?.slug}`} tags />
       <div>
         {posts?.length > 0 && posts?.map((post) => (
-          <PostComponent key={post?._id} document={post} />
+          <PostComponent key={post?._id} post={post} />
         ))}
       </div>
     </div>

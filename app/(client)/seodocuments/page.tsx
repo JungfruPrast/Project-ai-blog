@@ -1,9 +1,8 @@
 import React from 'react'
 import { client } from "@/sanity/lib/client";
 import Header from '@/app/components/Header';
-import { Document } from '@/app/components/PostComponent';
 import PostComponent from '@/app/components/PostComponent';
-
+import { SEO } from '@/app/utils.tsx/Interface';
 //set the display of content to latest published
 async function getSEO() {
   const query = `
@@ -25,7 +24,7 @@ async function getSEO() {
   export const revalidate = 600;
 
   export default async function Home() {
-    const posts: Document[] = await getSEO();
+    const posts: SEO[] = await getSEO();
     console.log(posts, "posts");
   
     return (
@@ -33,7 +32,7 @@ async function getSEO() {
         <Header title="SEO Documents" tags/>
         <div>
           {posts?.length > 0 &&
-            posts?.map((post) => <PostComponent key={post?._id} document={post} />)}
+            posts?.map((post) => <PostComponent key={post?._id} post={post} />)}
         </div>
       </div>
     );
