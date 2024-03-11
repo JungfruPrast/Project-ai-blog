@@ -1,8 +1,9 @@
 import React from 'react'
 import { client } from "@/sanity/lib/client";
 import Header from '../components/Header';
-import { Post } from '../utils.tsx/Interface';
+//import { Post } from '../utils.tsx/Interface';
 import PostComponent from '../components/PostComponent';
+import { Document } from '../components/PostComponent';
 
 //set the display of content to latest published
 async function getPosts() {
@@ -25,7 +26,7 @@ async function getPosts() {
   export const revalidate = 600;
 
   export default async function Home() {
-    const posts: Post[] = await getPosts();
+    const posts: Document[] = await getPosts();
     console.log(posts, "posts");
   
     return (
@@ -33,7 +34,7 @@ async function getPosts() {
         <Header title="Articles" tags/>
         <div>
           {posts?.length > 0 &&
-            posts?.map((post) => <PostComponent key={post?._id} post={post} />)}
+            posts?.map((post) => <PostComponent key={post?._id} document={post} />)}
         </div>
       </div>
     );

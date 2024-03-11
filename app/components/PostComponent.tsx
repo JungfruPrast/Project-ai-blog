@@ -1,37 +1,55 @@
-import Link from 'next/link'
-import React from 'react'
-import { Post } from '../utils.tsx/Interface'
+import Link from 'next/link';
+import React from 'react';
 
-interface Props {
-    post: Post;
+interface Tag {
+  _id: string;
+  name: string;
+  slug: { current: string; };
 }
 
-const PostComponent = ({post}: Props) => {
+export interface Document {
+  _type: 'post' | 'seodocuments';  // Ensure this matches your document types in Sanity
+  _id: string;
+  title: string;
+  slug: { current: string; };
+  publishedAt: string;
+  excerpt: string;
+  tags: Tag[];
+}
+
+// Define the Props interface expected by PostComponent
+interface Props {
+  document: Document;
+}
+
+const PostComponent = ({ document }: Props) => {
+  // Determine the path based on the document type
+  const path = document._type === 'post' ? 'posts' : 'seodocuments';
+
   return (
     <div className={cardStyle}>
-        <Link href={`/posts/${post?.slug?.current}`}>
-            <h2 className='text-2xl font-bold dark:text-slate-100'>{post?.title}</h2>
-            <p className='my-2 font-semibold'>{new Date(post?.publishedAt).toDateString()}</p>
-            <p className='dark:text-gray-200 mb-4 line-clamp-2'>{post?.excerpt}</p>
+        <Link href={`/${path}/${document.slug.current}`}>
+            <h2 className='text-2xl font-bold dark:text-slate-100 cursor-pointer'>{document.title}</h2>
         </Link>
+        <p className='my-2 font-semibold'>{new Date(document.publishedAt).toDateString()}</p>
+        <p className='dark:text-gray-200 mb-4 line-clamp-2'>{document.excerpt}</p>
 
         {/*TAGS*/}
         <div>
-        {post?.tags?.map((tag) => (
-          <span key={tag?._id} 
+        {document.tags.map((tag) => (
+          <span key={tag._id} 
             className='mr-2 p-1 rounded-full 
             text-sm lowercase 
             dark:bg-gray-950 border 
-            dark:border-gray-900'>
-              #{tag?.name}</span>
+            dark:border-gray-900 cursor-pointer'>
+              #{tag.name}</span>
         ))}
       </div>
     </div>
   )
 }
 
-
-export default PostComponent
+export default PostComponent;
 
 const cardStyle = `
 max-w-6xl
@@ -45,4 +63,4 @@ shadow-gray-600
 hover:bg-gray-950
 hover:text-white
 hover:dark:bg-zinc-900
-`
+`;
