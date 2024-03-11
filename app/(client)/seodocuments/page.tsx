@@ -30,7 +30,7 @@ async function getSEO() {
   
     return (
       <div>
-        <Header title="Articles" tags/>
+        <Header title="SEO Documents" tags/>
         <div>
           {posts?.length > 0 &&
             posts?.map((post) => <PostComponent key={post?._id} seo={post} />)}
