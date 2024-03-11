@@ -10,7 +10,8 @@ async function getAllTags() {
     name,
     slug,
     _id,
-    "postCount": count(*[_type == "post" && references(^._id)])
+    "postCount": count(*[_type == "post" && references(^._id)]),
+    "seoCount": count(*[_type == "seo" && references(^._id)])
   }
   `;
   const tags = await client.fetch(query); // Ensure 'await' is used to wait for the fetch result.

@@ -416,6 +416,6 @@ prose-li:ml-4
 prose-a:text-gray-500 
 prose-a:italic
 prose-a:underline
-prose-code:text-gray-400
+prose-code:text-red-500
 
 `;
