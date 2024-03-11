@@ -7,7 +7,8 @@ import React from "react";
 
 async function getPostsAndSEOByTag(tag: string) {
   const query = `
-  *[_type == "post" && references(*[_type == "tag" && slug.current == "${tag}"]._id)]{
+  *[_type in ["post", "seo"] && references(*[_type == "tag" && slug.current == "${tag}"]._id)]{
+    _type,
     title,
     slug,
     publishedAt,
