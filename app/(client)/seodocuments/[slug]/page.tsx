@@ -65,7 +65,7 @@ async function getSEOData(slug: string) {
         excerpt,
         _id,
         body,
-        "tags": tags[]-> {
+        tags[]-> {
             _id,
             name
           }
