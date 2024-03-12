@@ -1,15 +1,16 @@
 import Link from 'next/link'
 import React from 'react'
-import { Post } from '../utils.tsx/Interface'
+import { Post } from '../utils.tsx/Interface';
 
 interface Props {
     post: Post;
 }
 
 const PostComponent = ({post}: Props) => {
+  const basePath = post._type == 'post' ? '/posts' : '/seodocuments';
   return (
     <div className={cardStyle}>
-        <Link href={`/posts/${post?.slug?.current}`}>
+        <Link href={`${basePath}/${post?.slug?.current}`}>
             <h2 className='text-2xl font-bold dark:text-slate-100'>{post?.title}</h2>
             <p className='my-2 font-semibold'>{new Date(post?.publishedAt).toDateString()}</p>
             <p className='dark:text-gray-200 mb-4 line-clamp-2'>{post?.excerpt}</p>

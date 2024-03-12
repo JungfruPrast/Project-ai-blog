@@ -7,6 +7,7 @@ export interface Post {
     body: any;
     tags: Array<Tag>;
     _id: string;
+    _type: string;
 }
 
 export interface Tag {
