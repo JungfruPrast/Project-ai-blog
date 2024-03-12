@@ -3,6 +3,13 @@ import { client } from "@/sanity/lib/client";
 import Header from '@/app/components/Header';
 import { SEO } from '@/app/utils.tsx/Interface';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://project-ai-blog.vercel.app/'),
+  title: "SEO Documents",
+  description: "Interested in understanding the Fundamentals of SEO? This is the page for you. Follow along as I bring you on my personal processes of SEO Learning and Auditting",
+};
 
 //set the display of content to latest published
 async function getSEO() {

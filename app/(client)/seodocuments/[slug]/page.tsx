@@ -67,6 +67,7 @@ async function getSEOData(slug: string) {
         body,
         tags[]-> {
             _id,
+            slug,
             name
           }
       }
@@ -249,7 +250,7 @@ const SEOPage = async ({ params }: Params) => {
                             return null; // Adjusted to return null for consistency
                         }
                         return (
-                            <Link key={tag._id} href={`/tag/${tag.slug.current}`}>
+                            <Link key={tag?._id} href={`/tag/${tag.slug.current}`}>
                                 <div className='inline-flex mr-1 p-2 rounded-full text-sm bg-black text-white dark:bg-white dark:text-black'>
                                     #{tag.name}
                                 </div>
@@ -349,6 +350,10 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
               return <strong key={_key}>{acc}</strong>;
             case 'em':
               return <em key={_key}>{acc}</em>;
+            case 'code':
+              return <code key={_key}>{acc}</code>;
+            case 'strike-through': // Handling for strike-through
+              return <s key={_key}>{acc}</s>; 
             default:
               return acc;
           }
