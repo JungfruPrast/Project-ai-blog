@@ -118,13 +118,26 @@ export async function generateMetadata({ params }: { params: { slug: string } },
   const imageUrl = findFirstImageUrl(seoData.body); // Assuming seoData.body is an array of ContentBlocks
 
   return {
-    title: seoData.title,
-    description: seoData.excerpt,
+    title: seoData?.title,
+    description: seoData?.excerpt,
+    authors: [{name: 'Ezra Leong', url: 'https://project-ai-blog.vercel.app/about'}],
     openGraph: {
+      type: 'article',
+      publishedTime: seoData.publishedAt,
+      modifiedTime: seoData.updatedAt || seoData.publishedAt,
       url: `https://project-ai-blog.vercel.app/${slug}`, // Adjust with your actual URL structure
       title: seoData.title,
       description: seoData.excerpt,
       images: imageUrl ? [{ url: imageUrl, width: 800, height: 600, alt: seoData.title }] : [],
+    },
+    robots: {
+      index: true, // or false to prevent this page from being indexed
+      follow: true, // or false to instruct bots not to follow links from this page
+    // Additional directives can be included as needed:
+      noarchive: false, // Use true to prevent cached copies of this page from being available
+      nosnippet: false, // Use true to prevent a text snippet or video preview from being shown in search results
+      notranslate: false, // Use true to prevent translation of this page in search results
+      noimageindex: false, // Use true to prevent images on this page from being indexed
     },
   };
 }
