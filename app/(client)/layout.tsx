@@ -16,6 +16,15 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://project-ai-blog.vercel.app/'),
   title: "My AI Blogging Journey",
   description: "Follow me as I document my practices of AI content creation following SEO best practices with the goal of getting monetized",
+  robots: {
+    index: true, // or false to prevent this page from being indexed
+    follow: true, // or false to instruct bots not to follow links from this page
+  // Additional directives can be included as needed:
+    noarchive: false, // Use true to prevent cached copies of this page from being available
+    nosnippet: false, // Use true to prevent a text snippet or video preview from being shown in search results
+    notranslate: false, // Use true to prevent translation of this page in search results
+    noimageindex: false, // Use true to prevent images on this page from being indexed
+  },
 };
 
 export default function RootLayout({
