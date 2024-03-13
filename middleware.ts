@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
 
     const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'eMuh8xiwcX72rRYNAGENurQBAcH7kLlAUQcoOri3BIo=' https://www.googletagmanager.com https://www.google-analytics.com https://tagmanager.google.com https://www.google.com https://ssl.google-analytics.com https://www.gstatic.com 'unsafe-inline';
+    script-src 'self' 'nonce-${nonce}' https://www.googletagmanager.com https://www.google-analytics.com https://tagmanager.google.com https://www.google.com https://ssl.google-analytics.com https://www.gstatic.com 'unsafe-inline';
     img-src 'self' data: https://www.google-analytics.com https://ssl.gstatic.com https://www.gstatic.com;
     style-src 'self' 'unsafe-inline' https://tagmanager.google.com https://fonts.googleapis.com;
     font-src 'self' https://fonts.gstatic.com;
