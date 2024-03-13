@@ -250,7 +250,7 @@ const SEOPage = async ({ params }: Params) => {
                             return null; // Adjusted to return null for consistency
                         }
                         return (
-                            <Link key={tag?._id} href={`/tag/${tag.slug.current}`}>
+                            <Link key={tag._id} href={`/tag/${tag.slug.current}`}>
                                 <div className='inline-flex mr-1 p-2 rounded-full text-sm bg-black text-white dark:bg-white dark:text-black'>
                                     #{tag.name}
                                 </div>

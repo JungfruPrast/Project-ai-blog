@@ -2,8 +2,10 @@ import Link from 'next/link'
 import React from 'react'
 import { Post } from '../utils.tsx/Interface';
 
+//added basepathoverride to specify routing as the other mechanism only works when the presence of more than 1 source of data is being fetched. e.g., _type["seo"] && ["posts"], see tag/[slug] for example. 
 interface Props {
     post: Post;
+    basePathOverride?: string;
 }
 
 const PostComponent = ({post}: Props) => {

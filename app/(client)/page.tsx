@@ -3,6 +3,7 @@ import { client } from "@/sanity/lib/client";
 import Header from '../components/Header';
 import { Post } from '../utils.tsx/Interface';
 import Link from 'next/link';
+//import PostComponent from '../components/PostComponent';
 
 //set the display of content to latest published
 async function getPosts() {

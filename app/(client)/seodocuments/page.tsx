@@ -4,6 +4,7 @@ import Header from '@/app/components/Header';
 import { SEO } from '@/app/utils.tsx/Interface';
 import Link from 'next/link';
 import { Metadata } from 'next';
+//import PostComponent from '@/app/components/PostComponent';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://project-ai-blog.vercel.app/'),
