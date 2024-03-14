@@ -37,7 +37,7 @@ async function generateSitemapEntries(): Promise<MetadataRoute.Sitemap> {
     url: rootUrl,
     lastModified: new Date(), // You might want to set this to the most recent update date of your site
     changeFrequency: 'daily' as 'daily', // Assuming the homepage might change more frequently
-    prioirtiy: 1.0,
+    priority: 1.0,
   };
 
   return [rootEntry, ...documentEntries];
