@@ -74,12 +74,14 @@ async function getSEOData(slug: string) {
     `;
 
     // Directly fetch the data from Sanity
-    const seoData = await client.fetch(query);
+    const seoData = await client.fetch(query,{cache: 'force-cache'});
 
     // No need to explicitly call setCache here as fetchDataWithLock will handle it
     return seoData;
-  }, 3600); // Assuming TTL is 6000 seconds (100 minutes)
+  }); // Assuming TTL is 6000 seconds (100 minutes)
 }
+
+export const revalidate = 3600
 
 interface BaseBlock {
   _type: string;

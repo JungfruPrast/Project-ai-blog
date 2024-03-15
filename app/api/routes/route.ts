@@ -19,7 +19,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const cacheKey = 'seoLinksTitles';
   
   // Use fetchDataWithLock to either get the cached data or fetch new data if not cached or expired.
-  const data = await fetchDataWithLock(cacheKey, fetchSEOLinksTitles, 3600); // TTL set to 3600 seconds (1 hour)
+  const data = await fetchDataWithLock(cacheKey, fetchSEOLinksTitles); 
 
   // Return the data in a NextResponse with appropriate headers
   return new NextResponse(JSON.stringify(data), {

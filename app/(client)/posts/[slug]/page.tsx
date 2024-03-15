@@ -54,12 +54,14 @@ async function getPost(slug: string) {
     `;
 
     // Directly fetch the data from Sanity
-    const post= await client.fetch(query);
+    const post= await client.fetch(query,{cache: 'force-cache'});
 
     // No need to explicitly call setCache here as fetchDataWithLock will handle it
     return post;
-  }, 3600); // Assuming TTL is 6000 seconds (100 minutes)
+  }); 
 }
+
+export const revalidate = 3600
 
 interface BaseBlock {
   _type: string;

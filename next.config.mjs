@@ -1,13 +1,29 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
     images: {
-        remotePatterns: [
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "cdn.sanity.io",
+        },
+      ],
+    },
+    async headers() {
+      return [
+        {
+          source: "/(.*)",
+          headers: [
             {
-                protocol: "https",
-                hostname: "cdn.sanity.io",
-            }
-        ]
-    }
-};
-
-export default nextConfig;
+              key: "Cache-Control",
+              value: "public, max-age=3600",
+            },
+          ],
+        },
+      ];
+    },
+  };
+  
+  export default nextConfig;
+  
