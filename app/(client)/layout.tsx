@@ -45,13 +45,13 @@ export default function RootLayout({
           <main className="flex-grow mx-auto p-4 sm:px-6 lg:px-8 max-w-6xl lg w-full">
             {children}
             <Analytics />
-            <Script 
+            {/*<Script 
               id='Google-tag-manager'
                src={`https://www.googletagmanager.com/gtag/js?id=GTM-WCXLPWX5`}
                strategy="afterInteractive"
                nonce={nonce} // Applying nonce to the script
-             />
-
+             />*/}
+            
             <Script
               id="Google-analytics-ID"
               strategy="afterInteractive"
