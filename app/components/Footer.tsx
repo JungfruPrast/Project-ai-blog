@@ -1,11 +1,12 @@
 import ThemesSwitch from "./ThemesSwitch";
 import LinkedInIcon, { BuyMeACoffeeIcon } from "./Icons";
 import { InstagramIcon } from "./Icons";
+import { PrivacyIcon } from "./Icons";
 import Link from "next/link";
 
 const Footer = () => (
   <footer className='bottom-0 z-50 bg-inherit shadow dark:shadow-gray-600 w-full mt-10'>
-    <div className='border-t border-gray-300 dark:border-gray-700 flex flex-col items-center h-auto px-6 py-6 mx-auto max-w-6xl w-full my-5'>
+    <div className='border-t border-gray-300 dark:border-gray-700 flex flex-col items-center h-auto px-6 py-6 mx-auto max-w-6xl w-full'>
       {/* Container for paragraph + ThemesSwitch, ensuring they are next to each other */}
       <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center sm:items-center">
         <p className="text-sm mb-4 md:mb-0">
@@ -33,6 +34,12 @@ const Footer = () => (
             <BuyMeACoffeeIcon/>
             <p className="text-xs mt-2">Support</p>
           </a>
+        </div>
+        <div className="text-center">
+          <Link href={'/privacy-policy'} target="_blank" rel="noopener noreferrer" aria-label="Privacy Policy">
+            <PrivacyIcon/>
+            <p className="text-xs mt-2">Privacy Policy</p>
+          </Link>
         </div>
       </div>              
     </div>
