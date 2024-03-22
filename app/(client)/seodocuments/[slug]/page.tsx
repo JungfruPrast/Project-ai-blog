@@ -18,6 +18,8 @@ import { Metadata } from "next";
 import { fetchDataWithLock } from "@/app/utils.tsx/cache";
 import Script from "next/script";
 import { headers } from "next/headers";
+import TextToSpeechButton from "@/app/components/TextToSpeechButton";
+import ImageEnlargeOverlay from "@/app/components/LargeImageViewer";
 
 interface Params {
     params: {
@@ -25,6 +27,7 @@ interface Params {
     };
     searchParams: {[key: string]: string | string[] | undefined};
 }
+
 //issue definitely has to be with static pre-render from generate static params
 //export async function generateStaticParams() {
   //const allSEODocuments = await client.fetch(`*[_type == "seo"]{ "slug": slug.current }`);
@@ -260,13 +263,17 @@ const SEOPage = async ({ params }: Params) => {
                         );
                     })}
                     </div>
+                    
+                      {/*add speak function*/}
+                      <TextToSpeechButton blocks={seoData.body}/>
+                    
                     <div className={richTextStyles}>
                         <PortableText value={seoData.body} components={myPortableTextComponents} />
                     </div>
                 </div>
             </article>
             {headings && headings.length > 0 && (
-               <div className="hidden lg:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-60">
+               <div id='table-of-content' className="hidden sm:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-60">
               <TableOfContents headings={headings}/>
               </div>
         )}
@@ -378,12 +385,11 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
       return <p key={_key}>{renderChildren(children)}</p>;
     },
     image: ({ value }) => (
-      <Image
+      <ImageEnlargeOverlay
         src={urlForImage(value).url()}
         alt={value.alt || 'Post Image'}
         width={700}
         height={700}
-        layout='responsive'
       />
     ),
     codeBlock: ({ value }: { value: CodeBlockValue }) => (

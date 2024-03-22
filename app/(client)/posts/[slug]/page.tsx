@@ -16,6 +16,8 @@ import { fetchDataWithLock } from '@/app/utils.tsx/cache';
 import ResponsiveSidebarWrapper from '@/app/components/ResponsiveSideBar';
 import { headers } from 'next/headers';
 import Script from 'next/script';
+import TextToSpeechButton from '@/app/components/TextToSpeechButton';
+import ImageEnlargeOverlay from '@/app/components/LargeImageViewer';
 
 //defining the parameters of the query function
 interface Params {
@@ -231,7 +233,9 @@ const page = async ({params}: Params) => {
                         );
                     })}
                 </div>
-              
+                {/*add speak function*/}
+                <TextToSpeechButton blocks={post.body}/>
+                        
                 <div className={richTextStyles}>
                     <PortableText value={post.body} components={myPortableTextComponents} />
                 </div>
@@ -241,7 +245,7 @@ const page = async ({params}: Params) => {
         <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-60 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
           <ResponsiveSidebarWrapper>
             {headings && headings.length > 0 && (
-             <div className="overflow-auto custom-scrollbar text-sm flex-shrink-0 w-full">
+             <div id='table-of-content' className="overflow-auto custom-scrollbar text-sm flex-shrink-0 w-full">
                 <TableOfContents headings={headings}/>
             </div>
               )}
@@ -356,12 +360,11 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
       return <p key={_key}>{renderChildren(children)}</p>;
     },
     image: ({ value }) => (
-      <Image
+      <ImageEnlargeOverlay
         src={urlForImage(value).url()}
         alt={value.alt || 'Post Image'}
         width={700}
         height={700}
-        layout='responsive'
       />
     ),
     codeBlock: ({ value }: { value: CodeBlockValue }) => (
