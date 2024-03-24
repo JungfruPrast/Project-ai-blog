@@ -65,13 +65,14 @@ export const SEO = {
                       }
                     ],
                   },
-                  // Define the first paragraph as a custom block
                   {
                     title: "First Paragraph",
                     name: "firstParagraph",
                     type: "block",
-                    styles: [],
-                    lists: [],
+                    styles: [{title: "Normal", value:"normal"}],
+                    lists: [{title:'Bullet', value:'bullet' },
+                            {title: 'Number', value:'number'}
+                    ],
                     marks: {
                       // Define the same mark definitions as your other blocks if needed
                     },
@@ -134,6 +135,7 @@ export const SEO = {
                         { title: 'JavaScript', value: 'javascript' },
                         { title: 'HTML', value: 'html' },
                         { title: 'CSS', value: 'css' },
+                    // Add other languages you support here
                       ],
                     },
                 },
