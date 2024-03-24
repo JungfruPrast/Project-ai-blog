@@ -69,7 +69,6 @@ export const SEO = {
                     type: "block",
                     styles: [
                         { title: "Normal", value: "normal" },
-                        { title: "FirstParagraph", value: "normal"},
                         { title: "H1", value: "h1" },
                         { title: "H2", value: "h2" },
                         { title: "H3", value: "h3" },
@@ -112,6 +111,19 @@ export const SEO = {
                 {
                     type: "image",
                     fields: [{type: "text", name: "alt", title: "Alt"}],
+                },
+                {
+                    name: "firstParagraph",
+                    title: "First Paragraph",
+                    type: "object",
+                    fields: [
+                        {
+                            name: "text",
+                            title: "Text",
+                            type: "array",
+                            of: [{type: "block"}] // Use an array of blocks if you want rich text features
+                        }
+                    ]
                 },
                 {
                     title: "Code Block",
