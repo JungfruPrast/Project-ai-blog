@@ -65,6 +65,8 @@ async function getSEOData(slug: string) {
         slug,
         publishedAt,
         updatedAt,
+        featuredImage,
+        takeaways,
         excerpt,
         _id,
         body,
