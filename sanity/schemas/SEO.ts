@@ -38,33 +38,38 @@ export const SEO = {
             validation: (Rule: Rule) => Rule.max(200).error('Max 200 characters')
         },
         {
+            name: "firstParagraph",
+            title: "First Paragraph",
+            type: "text",
+        },
+        {
+            title: "Featured Image",
+            type: "object",
+            name: "featuredImage",
+            fields: [
+              {
+                name: "image",
+                title: "Image",
+                type: "image",
+                fields: [
+                  {
+                    name: "alt",
+                    title: "Alt Text",
+                    type: "text",
+                    validation: (Rule: Rule) => Rule.error('Alt text is required.').required()
+                  }
+                ],
+                options: {
+                  hotspot: true,
+                },
+              }
+            ],
+          },
+        {
             name: "body",
             title: "Body",
             type: "array",
             of: [
-                {
-                    title: "Featured Image",
-                    type: "object",
-                    name: "featuredImage",
-                    fields: [
-                      {
-                        name: "image",
-                        title: "Image",
-                        type: "image",
-                        fields: [
-                          {
-                            name: "alt",
-                            title: "Alt Text",
-                            type: "text",
-                            validation: (Rule: Rule) => Rule.error('Alt text is required.').required()
-                          }
-                        ],
-                        options: {
-                          hotspot: true,
-                        },
-                      }
-                    ],
-                  },
                 {
                     type: "block",
                     styles: [
@@ -111,19 +116,6 @@ export const SEO = {
                 {
                     type: "image",
                     fields: [{type: "text", name: "alt", title: "Alt"}],
-                },
-                {
-                    name: "firstParagraph",
-                    title: "First Paragraph",
-                    type: "object",
-                    fields: [
-                        {
-                            name: "text",
-                            title: "Text",
-                            type: "array",
-                            of: [{type: "block"}] // Use an array of blocks if you want rich text features
-                        }
-                    ]
                 },
                 {
                     title: "Code Block",
