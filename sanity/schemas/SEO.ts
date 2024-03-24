@@ -109,10 +109,44 @@ export const SEO = {
                                         type: "boolean",
                                     }
                                 ],
-                            }
+                            },
+                            {
+                                name: 'firstParagraph',
+                                type: 'object',
+                                fields: [{
+                                    title: 'Description',
+                                    name: 'description',
+                                    type: 'string',
+                                    initialValue: 'First Paragraph',
+                                    readOnly: true,
+                                }]
+                            },
                         ],
                     },
                 },
+                {
+                    title: "Featured Image",
+                    type: "object",
+                    name: "featuredImage",
+                    fields: [
+                      {
+                        name: "image",
+                        title: "Image",
+                        type: "image",
+                        fields: [
+                          {
+                            name: "alt",
+                            title: "Alt Text",
+                            type: "text",
+                            validation: (Rule: Rule) => Rule.error('Alt text is required.').required()
+                          }
+                        ],
+                        options: {
+                          hotspot: true,
+                        },
+                      }
+                    ],
+                  },
                 {
                     type: "image",
                     fields: [{type: "text", name: "alt", title: "Alt"}],
