@@ -197,6 +197,16 @@ const page = async ({params}: Params) => {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
     <div className="flex flex-col lg:flex-row min-h-screen">
+    <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-48 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
+          <ResponsiveSidebarWrapper>
+    
+            {headings && headings.length > 0 && (
+             <div className="lg:hidden block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-full">
+                <TableOfContents headings={headings}/>
+            </div>
+              )}
+          </ResponsiveSidebarWrapper>
+      </div>    
         <article className="flex-grow flex flex-col items-center">
             <Header title={post?.title}/>
             
@@ -242,15 +252,11 @@ const page = async ({params}: Params) => {
               
             </div>
         </article>
-        <div className="sticky top-32 lg:max-h-[calc(100vh*4/6)] lg:overflow-auto custom-scrollbar text-sm shrink-0 lg:w-60 sm:max-h-screen sm:overflow-y-auto sm:w-auto">
-          <ResponsiveSidebarWrapper>
-            {headings && headings.length > 0 && (
-             <div id='table-of-content' className="overflow-auto custom-scrollbar text-sm flex-shrink-0 w-full">
-                <TableOfContents headings={headings}/>
-            </div>
-              )}
-          </ResponsiveSidebarWrapper>
-        </div>
+        {headings && headings.length > 0 && (
+               <div id='table-of-content' className="hidden sm:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-60">
+              <TableOfContents headings={headings}/>
+              </div>
+        )}
     </div>
     </>
 );

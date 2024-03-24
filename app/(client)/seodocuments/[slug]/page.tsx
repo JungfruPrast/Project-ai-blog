@@ -265,14 +265,21 @@ const SEOPage = async ({ params }: Params) => {
                         );
                     })}
                     </div>
-                    
                       {/*add speak function*/}
                       <TextToSpeechButton blocks={seoData.body}/>
-                    
-                    <div className={richTextStyles}>
+                                      
+                      {/* Featured Image and PortableText content */}
+                      <div className={richTextStyles + " flex flex-wrap"}>
+                      {seoData.featuredImage && seoData.featuredImage.image && (
+                          <img
+                              src={urlForImage(seoData.featuredImage.image.asset).url()}
+                              alt={seoData.featuredImage.image.alt || 'Featured image'}
+                              className="float-left mr-4 max-w-xs" // Tailwind CSS classes for layout
+                          />
+                      )}
                         <PortableText value={seoData.body} components={myPortableTextComponents} />
+                      </div>
                     </div>
-                </div>
             </article>
             {headings && headings.length > 0 && (
                <div id='table-of-content' className="hidden sm:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-60">
