@@ -43,6 +43,40 @@ export const SEO = {
             type: "array",
             of: [
                 {
+                    title: "Featured Image",
+                    type: "object",
+                    name: "featuredImage",
+                    fields: [
+                      {
+                        name: "image",
+                        title: "Image",
+                        type: "image",
+                        fields: [
+                          {
+                            name: "alt",
+                            title: "Alt Text",
+                            type: "text",
+                            validation: (Rule: Rule) => Rule.error('Alt text is required.').required()
+                          }
+                        ],
+                        options: {
+                          hotspot: true,
+                        },
+                      }
+                    ],
+                  },
+                  // Define the first paragraph as a custom block
+                  {
+                    title: "First Paragraph",
+                    name: "firstParagraph",
+                    type: "block",
+                    styles: [],
+                    lists: [],
+                    marks: {
+                      // Define the same mark definitions as your other blocks if needed
+                    },
+                  },
+                {
                     type: "block",
                     styles: [
                         { title: "Normal", value: "normal" },
