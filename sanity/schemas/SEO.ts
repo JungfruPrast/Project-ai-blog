@@ -38,6 +38,16 @@ export const SEO = {
             validation: (Rule: Rule) => Rule.max(200).error('Max 200 characters')
         },
         {
+            title: "First Paragraph",
+            name: "firstParagraph",
+            type: "block",
+            styles: [{ title: "Normal", value: "normal" }],
+            marks: {
+                // You might want to include fewer marks or specific ones for the first paragraph
+            },
+            validation: (Rule: Rule) => Rule.required().error('The first paragraph is required.'),
+        },
+        {
             name: "body",
             title: "Body",
             type: "array",
@@ -65,6 +75,15 @@ export const SEO = {
                       }
                     ],
                   },
+                  {
+                    name: "body",
+                    title: "Body",
+                    type: "array",
+                    of: [
+                        { type: "firstParagraph" }, // Referencing the custom first paragraph object
+                        // The rest of your existing types
+                    ],
+                },  
                 {
                     type: "block",
                     styles: [
