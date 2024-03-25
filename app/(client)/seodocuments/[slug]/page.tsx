@@ -183,7 +183,7 @@ const SEOPage = async ({ params }: Params) => {
     }
 
     const featuredImageSrc = seoData.featuredImage ? seoData.featuredImage.url : undefined;
-  const featuredImageAlt = seoData.featuredImage ? seoData.featuredImage.alt : 'Default alt text if none provided';
+    const featuredImageAlt = seoData.featuredImage ? seoData.featuredImage.alt : 'Default alt text if none provided';
 
     const headings = extractAndNestHeadingsFromBody(seoData.body);
     const imageUrl = findFirstImageUrl(seoData.body);
@@ -278,7 +278,12 @@ const SEOPage = async ({ params }: Params) => {
                       <div className="content-container my-4" aria-label="featured-image">
                         {featuredImageSrc && (
                               // Float the image to the left and add margin for spacing
-                          <Image src={featuredImageSrc} alt={featuredImageAlt} width={250} height={250} className="float-left mr-4" />
+                          <Image 
+                            src={featuredImageSrc} 
+                            alt={featuredImageAlt} 
+                            width={250} 
+                            height={250} 
+                            className="float-left mr-4 mt-12 max-w-2xl sm:px-6 w-auto m-auto" />
                       )}
                       </div>
                       <div className={richTextStyles}>
@@ -298,6 +303,7 @@ const SEOPage = async ({ params }: Params) => {
 
 export default SEOPage;
 
+//typescript interfaces to ensure that the serializer below functions correctly
 interface MarkDef {
     _key: string;
     _type: string;

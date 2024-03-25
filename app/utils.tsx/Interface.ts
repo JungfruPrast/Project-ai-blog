@@ -8,14 +8,10 @@ export interface Post {
     tags: Array<Tag>;
     _id: string;
     _type: string;
-    featuredImage?: {
-        image: {
-            asset: {
-                _ref: string; // Reference to the image asset
-            };
-            alt?: string;   
-        }      
-    };
+    featuredImage: {
+        alt: string;
+        url: string;
+      };
 }
 
 export interface Tag {
