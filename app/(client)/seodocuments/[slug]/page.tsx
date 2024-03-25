@@ -65,9 +65,10 @@ async function getSEOData(slug: string) {
         slug,
         publishedAt,
         updatedAt,
-        "featuredImage": featuredImage.image.asset->url,
-        "altText": featuredImage.image.alt,
-        takeaways,
+        "featuredImage": {
+          "url": featuredImage.image.asset->url,
+          "alt": featuredImage.image.alt
+        },
         excerpt,
         _id,
         body,
