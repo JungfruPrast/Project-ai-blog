@@ -66,8 +66,8 @@ async function getSEOData(slug: string) {
         publishedAt,
         updatedAt,
         "featuredImage": {
-          "url": featuredImage.image.asset->url,
-          "alt": featuredImage.image.alt
+          "alt": featuredImage.image.alt,
+          "url": featuredImage.image.asset->url
         },
         excerpt,
         _id,
@@ -180,7 +180,8 @@ const SEOPage = async ({ params }: Params) => {
     if (!seoData) {
         notFound(); 
     }
-
+    const featuredImageSrc = seoData.featuredImage?.image?.asset
+      ? urlForImage(seoData.featuredImage.image.asset).url() : undefined;
     const headings = extractAndNestHeadingsFromBody(seoData.body);
     const imageUrl = findFirstImageUrl(seoData.body);
     const readingTime = calculateReadingTime(seoData.body);
@@ -271,14 +272,16 @@ const SEOPage = async ({ params }: Params) => {
                       <TextToSpeechButton blocks={seoData.body}/>
                                       
                       {/* Featured Image and PortableText content */}
-                      <div className={richTextStyles + " flex flex-wrap"}>
-                      {seoData.featuredImage && seoData.featuredImage.image && (
-                          <img
-                              src={urlForImage(seoData.featuredImage.image.asset).url()}
-                              alt={seoData.featuredImage.image.alt || 'Featured image'}
-                              className="float-left mr-4 max-w-xs" // Tailwind CSS classes for layout
-                          />
-                      )}
+                      {featuredImageSrc && (
+                          <div className="my-4">
+                            <img
+                              src={featuredImageSrc}
+                              alt={seoData.featuredImage?.image?.alt || 'Featured image'}
+                              className="w-full md:w-auto" // Tailwind classes for styling
+                            />
+                          </div>
+                        )}
+                      <div className={richTextStyles}>
                         <PortableText value={seoData.body} components={myPortableTextComponents} />
                       </div>
                     </div>

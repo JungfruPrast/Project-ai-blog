@@ -36,12 +36,14 @@ export interface SEO {
     tags: Array<Tag>;
     _id: string;
     _type: string;
-    featuredImage?: {
+    featuredImage: {
         image: {
+            _type: string;
+            alt: string;
             asset: {
-                _ref: string; // Reference to the image asset
-            };   
-            alt?: string;
-        }      
+                _ref: string;
+                _type: string;
+            };
+        };
     };
 }
