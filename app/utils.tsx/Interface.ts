@@ -37,13 +37,7 @@ export interface SEO {
     _id: string;
     _type: string;
     featuredImage: {
-        image: {
-            _type: string;
-            alt: string;
-            asset: {
-                _ref: string;
-                _type: string;
-            };
-        };
-    };
+        alt: string;
+        url: string;
+      };
 }

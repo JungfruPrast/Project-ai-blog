@@ -83,6 +83,7 @@ async function getSEOData(slug: string) {
     // Directly fetch the data from Sanity
     const seoData = await client.fetch(query,{cache: 'force-cache'});
 
+    console.log(seoData.featuredImage)
     // No need to explicitly call setCache here as fetchDataWithLock will handle it
     return seoData;
   }); // Assuming TTL is 6000 seconds (100 minutes)
@@ -180,8 +181,10 @@ const SEOPage = async ({ params }: Params) => {
     if (!seoData) {
         notFound(); 
     }
-    const featuredImageSrc = seoData.featuredImage?.image?.asset
-      ? urlForImage(seoData.featuredImage.image.asset).url() : undefined;
+
+    const featuredImageSrc = seoData.featuredImage ? seoData.featuredImage.url : undefined;
+  const featuredImageAlt = seoData.featuredImage ? seoData.featuredImage.alt : 'Default alt text if none provided';
+
     const headings = extractAndNestHeadingsFromBody(seoData.body);
     const imageUrl = findFirstImageUrl(seoData.body);
     const readingTime = calculateReadingTime(seoData.body);
@@ -272,15 +275,12 @@ const SEOPage = async ({ params }: Params) => {
                       <TextToSpeechButton blocks={seoData.body}/>
                                       
                       {/* Featured Image and PortableText content */}
-                      {featuredImageSrc && (
-                          <div className="my-4">
-                            <img
-                              src={featuredImageSrc}
-                              alt={seoData.featuredImage?.image?.alt || 'Featured image'}
-                              className="w-full md:w-auto" // Tailwind classes for styling
-                            />
-                          </div>
-                        )}
+                      <div className="content-container my-4" aria-label="featured-image">
+                        {featuredImageSrc && (
+                              // Float the image to the left and add margin for spacing
+                          <Image src={featuredImageSrc} alt={featuredImageAlt} width={250} height={250} className="float-left mr-4" />
+                      )}
+                      </div>
                       <div className={richTextStyles}>
                         <PortableText value={seoData.body} components={myPortableTextComponents} />
                       </div>
@@ -341,6 +341,7 @@ interface MarkDef {
     rows: TableRow[];
   }
 
+//this function generates the slug by taking the headers from the serializer, it's used here in order to match the id value in the generate toc function  
 const generateSlug = (text: string): string =>
   text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
 
