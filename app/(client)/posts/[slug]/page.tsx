@@ -443,6 +443,7 @@ const richTextStyles = `
 mt-14 
 text-justify
 max-w-2xl
+sm:px-6 w-auto
 m-auto
 prose-headings:my-5
 prose-h1:text-3xl 
@@ -463,4 +464,7 @@ prose-a:italic
 prose-a:underline
 prose-code:text-red-500
 
+
 `;
+
+

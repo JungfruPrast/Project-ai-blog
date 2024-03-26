@@ -53,7 +53,6 @@ interface Props {
 }
 
 const PostComponent = ({post}: Props) => {
-  const basePath = post._type == 'post' ? '/posts' : '/seodocuments';
    const imageUrl = post?.featuredImage?.url; // Directly accessing 'url'
     const imageAlt = post?.featuredImage?.alt;
   
