@@ -14,6 +14,10 @@ async function getPosts() {
     slug,
     publishedAt,
     excerpt,
+    "featuredImage": {
+      "alt": featuredImage.image.alt,
+      "url": featuredImage.image.asset->url
+    },
     tags[]-> {
       _id,
       slug,
