@@ -4,6 +4,7 @@ import Header from '@/app/components/Header';
 import { SEO } from '@/app/utils.tsx/Interface';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import Image from 'next/image';
 //import PostComponent from '@/app/components/PostComponent';
 
 export const metadata: Metadata = {
@@ -20,6 +21,10 @@ async function getSEO() {
     slug,
     publishedAt,
     excerpt,
+    "featuredImage": {
+      "alt": featuredImage.image.alt,
+      "url": featuredImage.image.asset->url
+    },
     tags[]-> {
       _id,
       slug,
@@ -51,9 +56,25 @@ async function getSEO() {
     post: SEO;
 }
 
+
 const PostComponent = ({post}: Props) => {
+  const imageUrl = post?.featuredImage?.url; // Directly accessing 'url'
+  const imageAlt = post?.featuredImage?.alt;
+
   return (
-    <div className={cardStyle}>
+      <div className={`${cardStyle}  items-start`}> {/* Add flex */}
+      {imageUrl && (
+        <div className="flex-none w-48 relative mr-4"> {/* Image container */}
+          <Image
+            src={imageUrl}
+            alt={imageAlt || 'Featured Image'}
+            layout="fill" // Make the image cover the available space
+            objectFit="cover" // Cover the space without losing aspect ratio
+            className="rounded-lg" // Add rounded corners to the image
+          />
+        </div>
+      )}
+    
         <Link href={`/seodocuments/${post?.slug?.current}`}>
             <h2 className='text-2xl font-bold dark:text-slate-100'>{post?.title}</h2>
             <p className='my-2 font-semibold'>{new Date(post?.publishedAt).toDateString()}</p>

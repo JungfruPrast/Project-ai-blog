@@ -45,6 +45,10 @@ async function getPost(slug: string) {
       publishedAt,
       updatedAt,
       excerpt,
+      "featuredImage": {
+        "alt": featuredImage.image.alt,
+        "url": featuredImage.image.asset->url
+      },
       _id,
       body,
       tags[]-> {
@@ -159,7 +163,9 @@ const page = async ({params}: Params) => {
     const headings = extractAndNestHeadingsFromBody(post.body)
     const imageUrl = findFirstImageUrl(post.body);
     const readingTime = calculateReadingTime(post.body);
-    
+    const featuredImageSrc = post.featuredImage ? post.featuredImage.url : undefined;
+    const featuredImageAlt = post.featuredImage ? post.featuredImage.alt : 'Default alt text if none provided';
+
 
     const jsonLd = {
       "@context": "http://schema.org",
@@ -245,7 +251,20 @@ const page = async ({params}: Params) => {
                 </div>
                 {/*add speak function*/}
                 <TextToSpeechButton blocks={post.body}/>
-                        
+
+                      {/* Featured Image and PortableText content */}
+                        <div className="content-container my-4" aria-label="featured-image">
+                        {featuredImageSrc && (
+                              // Float the image to the left and add margin for spacing
+                          <Image 
+                            src={featuredImageSrc} 
+                            alt={featuredImageAlt} 
+                            width={250} 
+                            height={250} 
+                            className="float-left mr-4 mt-12 max-w-2xl sm:px-6 w-auto m-auto sm:w-full" />
+                      )}
+                      </div>
+
                 <div className={richTextStyles}>
                     <PortableText value={post.body} components={myPortableTextComponents} />
                 </div>

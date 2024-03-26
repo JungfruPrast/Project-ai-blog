@@ -36,6 +36,29 @@ export const post = {
             validation: (Rule:Rule) => Rule.max(200).error('Max 200 characters')
         },
         {
+            title: "Featured Image",
+            type: "object",
+            name: "featuredImage",
+            fields: [
+              {
+                name: "image",
+                title: "Image",
+                type: "image",
+                fields: [
+                  {
+                    name: "alt",
+                    title: "Alt Text",
+                    type: "text",
+                    validation: (Rule: Rule) => Rule.error('Alt text is required.').required()
+                  }
+                ],
+                options: {
+                  hotspot: true,
+                },
+              }
+            ],
+          },
+        {
             name: "body",
             title: "Body",
             type: "array",

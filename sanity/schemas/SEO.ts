@@ -38,11 +38,6 @@ export const SEO = {
             validation: (Rule: Rule) => Rule.max(200).error('Max 200 characters')
         },
         {
-            name: "takeaways",
-            title: "Takeaways",
-            type: "text",
-        },
-        {
             title: "Featured Image",
             type: "object",
             name: "featuredImage",
