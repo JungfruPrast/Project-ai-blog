@@ -62,39 +62,39 @@ const PostComponent = ({post}: Props) => {
   const imageAlt = post?.featuredImage?.alt;
 
   return (
-      <div className={`${cardStyle}  items-start`}> {/* Add flex */}
+    <div className={`${cardStyle} flex flex-col md:flex-row items-start space-x-4`}> {/* Use flex-col for vertical layout on mobile */}
       {imageUrl && (
-        <div className="flex-none w-48 relative mr-4"> {/* Image container */}
+        <div className="flex-none w-full md:w-48 h-48 relative mb-4 md:mb-0"> {/* Ensure full width on mobile */}
           <Image
             src={imageUrl}
             alt={imageAlt || 'Featured Image'}
-            layout="fill" // Make the image cover the available space
-            objectFit="cover" // Cover the space without losing aspect ratio
-            className="rounded-lg" // Add rounded corners to the image
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
           />
         </div>
       )}
-    
+      <div className="flex-grow"> {/* This div wraps the text and tags */}
         <Link href={`/seodocuments/${post?.slug?.current}`}>
+          
             <h2 className='text-2xl font-bold dark:text-slate-100'>{post?.title}</h2>
             <p className='my-2 font-semibold'>{new Date(post?.publishedAt).toDateString()}</p>
             <p className='dark:text-gray-200 mb-4 line-clamp-2'>{post?.excerpt}</p>
+          
         </Link>
-
-        {/*TAGS*/}
-        <div>
-        {post?.tags?.map((tag) => (
-          <span key={tag?._id} 
-            className='mr-2 p-1 rounded-full 
-            text-sm lowercase 
-            dark:bg-gray-950 border 
-            dark:border-gray-900'>
-              #{tag?.name}</span>
-        ))}
+        {/* Tags div now moved here to be part of the main flow */}
+        <div className="mt-2"> {/* Added margin-top for spacing */}
+          {post?.tags?.map((tag) => (
+            <span key={tag?._id} 
+              className='inline-block mr-2 mb-2 p-1 rounded-full text-sm lowercase dark:bg-gray-950 border dark:border-gray-900'>
+                #{tag?.name}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const cardStyle = `
 max-w-6xl

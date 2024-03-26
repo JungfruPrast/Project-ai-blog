@@ -15,7 +15,7 @@ const PostComponent = ({post}: Props) => {
     const imageAlt = post?.featuredImage?.alt;
 
   return (
-      <div className={`${cardStyle}  items-start`}> {/* Add flex */}
+      <div className={`${cardStyle} flex items-start`}> {/* Add flex */}
       {imageUrl && (
         <div className="flex-none w-48 relative mr-4"> {/* Image container */}
           <Image
