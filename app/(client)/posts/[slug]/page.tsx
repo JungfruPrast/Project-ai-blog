@@ -261,7 +261,7 @@ const page = async ({params}: Params) => {
                             alt={featuredImageAlt} 
                             width={250} 
                             height={250} 
-                            className="float-left mr-4 mt-12 max-w-2xl sm:px-6 w-auto m-auto sm:w-full" />
+                            className="float-left mr-4 mt-12 max-w-2xl sm:px-6 w-auto m-auto" />
                       )}
                       </div>
 
