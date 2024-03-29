@@ -435,7 +435,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
             {/* Use "plaintext" or another safe default for unknown languages */}
             <Refractor language={language} value={value.code} />
           </pre>
-          <div className="absolute bottom-0 right-0 m-2">
+          <div className="absolute bottom-0 right-2">
             <CopyToClipboard textToCopy={value.code} />
           </div>
         </div>
