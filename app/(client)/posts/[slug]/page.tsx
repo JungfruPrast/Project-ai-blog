@@ -21,9 +21,12 @@ import ImageEnlargeOverlay from '@/app/components/LargeImageViewer';
 import Refractor from 'react-refractor';
 import js from 'refractor/lang/javascript';
 import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript'
+
 
 Refractor.registerLanguage(js);
 Refractor.registerLanguage(tsx);
+Refractor.registerLanguage(typescript);
 
 //defining the parameters of the query function
 interface Params {
@@ -399,23 +402,24 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
       />
     ),
 
-  codeBlock: ({ value }: { value: CodeBlockValue }) => {
-    const language = value.language || 'javascript'; // Default to 'javascript' if not specified
-    // Fallback for languages not explicitly imported/registered
-    const fallbackLanguage = ['javascript', 'tsx'].includes(language) ? language : 'none';
-
-    return (
-      <div className="relative">
-        <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-inherit shadow-md dark:bg-inherit dark:shadow-gray-700">
-          {/* Updated: Removed markers prop since 'highlightedLines' is not part of CodeBlockValue */}
-          <Refractor language={fallbackLanguage} value={value.code} />
-        </pre>
-        <div className="absolute bottom-0 right-0 m-2">
-          <CopyToClipboard textToCopy={value.code} />
+    codeBlock: ({ value }: { value: CodeBlockValue }) => {
+      // Ensure a fallback for unregistered or "none" language
+      const registeredLanguages = ['javascript', 'tsx', 'typescript']; // Add all languages you've registered
+      const language = value.language && registeredLanguages.includes(value.language) 
+      ? value.language 
+      : 'tsx';    
+      return (
+        <div className="relative">
+          <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-prismjs-default shadow-md dark:bg-inherit dark:shadow-gray-700 mt-2">
+            {/* Use "plaintext" or another safe default for unknown languages */}
+            <Refractor language={language} value={value.code} />
+          </pre>
+          <div className="absolute bottom-0 right-0 m-2">
+            <CopyToClipboard textToCopy={value.code} />
+          </div>
         </div>
-      </div>
-    );
-  },
+      );
+    },
 
     table: ({ value }: { value: Table }) => (
       // Wrap the table in a div with overflow-x-auto to allow horizontal scrolling on small screens

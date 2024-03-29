@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* globals.css */
 
 /* Custom scrollbar for Webkit browsers */
 html::-webkit-scrollbar {
@@ -68,4 +67,8 @@ html {
 .responsive-sidebar-wrapper {
   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
   scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.bg-prismjs-default {
+  background-color: #f5f2f0;
 }
