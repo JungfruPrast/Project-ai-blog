@@ -20,6 +20,13 @@ import Script from "next/script";
 import { headers } from "next/headers";
 import TextToSpeechButton from "@/app/components/TextToSpeechButton";
 import ImageEnlargeOverlay from "@/app/components/LargeImageViewer";
+import Refractor from "react-refractor";
+import js from 'refractor/lang/javascript';
+import tsx from 'refractor/lang/tsx';
+
+//placing it here for now; it simply words with the portable text serializer codeblock to output the right syntax highlighting 
+Refractor.registerLanguage(js);
+Refractor.registerLanguage(tsx);
 
 interface Params {
     params: {
@@ -413,16 +420,24 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
         height={700}
       />
     ),
-    codeBlock: ({ value }: { value: CodeBlockValue }) => (
+
+  codeBlock: ({ value }: { value: CodeBlockValue }) => {
+    const language = value.language || 'javascript'; // Default to 'javascript' if not specified
+    // Fallback for languages not explicitly imported/registered
+    const fallbackLanguage = ['javascript', 'tsx'].includes(language) ? language : 'none';
+
+    return (
       <div className="relative">
-      <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-inherit shadow-md dark:bg-inherit dark:shadow-gray-700">
-        <code className="language-javascript">{value.code}</code>
-      </pre>
-      <div className="absolute bottom-0 right-0 m-2">
-        <CopyToClipboard textToCopy={value.code} />
+        <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-inherit shadow-md dark:bg-inherit dark:shadow-gray-700">
+          {/* Updated: Removed markers prop since 'highlightedLines' is not part of CodeBlockValue */}
+          <Refractor language={fallbackLanguage} value={value.code} />
+        </pre>
+        <div className="absolute bottom-0 right-0 m-2">
+          <CopyToClipboard textToCopy={value.code} />
+        </div>
       </div>
-    </div>
-    ),
+    );
+  },
 
     table: ({ value }: { value: Table }) => (
       // Wrap the table in a div with overflow-x-auto to allow horizontal scrolling on small screens
@@ -483,6 +498,5 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
   prose-a:text-gray-500 
   prose-a:italic
   prose-a:underline
-  prose-code:text-red-500
   
   `;

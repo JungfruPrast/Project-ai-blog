@@ -123,6 +123,9 @@ export const SEO = {
                         { title: 'JavaScript', value: 'javascript' },
                         { title: 'HTML', value: 'html' },
                         { title: 'CSS', value: 'css' },
+                        { title: 'TypeScript', value: 'typescript' },
+                        { title: 'TSX', value: 'tsx' },
+                        { title: 'XML', value: 'xml' },
                     // Add other languages you support here
                       ],
                     },
