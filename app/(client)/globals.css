@@ -73,6 +73,10 @@ html {
   background-color: #f5f2f0;
 }
 
+.dark .bg-prismjs-default {
+  background-color: #2d2d2d; /* Dark mode background color */
+}
+
 .custom-code-style {
   background-color: #f5f2f0; /* Translucent gray background */
   color: #1f2937;

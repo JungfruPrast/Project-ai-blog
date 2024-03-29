@@ -429,7 +429,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
             {value.rows.map((row, rowIndex) => (
               <tr key={row._key || rowIndex}>
                 {row.cells.map((cellContent, cellIndex) => (
-                  <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td key={cellIndex} className="px-6 py-4 text-sm text-left">
                     {cellContent} {/* Directly render the string content of the cell */}
                   </td>
                 ))}
