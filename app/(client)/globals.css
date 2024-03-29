@@ -82,10 +82,10 @@ html {
 }
 
 /* Custom Code Style for Dark Mode */
-@media (prefers-color-scheme: dark) {
-  .custom-code-style {
-    background-color: #2d2d2d; /* Darker background for dark mode */
-    color: #cdd6f4; /* Lighter text color for better readability in dark mode */
-    /* The rest of the properties remain the same, so they're not repeated */
-  }
+.dark-custom-code-style {
+  background-color: #2d2d2d; /* Darker background */
+  color: #cdd6f4; /* Lighter text color */
+  padding: 0.25rem 0.5rem; /* Padding remains the same */
+  border-radius: 0.375rem; /* Rounded corners */
+  font-family: monospace; /* Monospaced font */
 }

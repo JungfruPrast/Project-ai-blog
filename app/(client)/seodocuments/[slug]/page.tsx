@@ -390,7 +390,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
             case 'em':
               return <em key={_key}>{acc}</em>;
             case 'code':
-              return <code key={_key}>{acc}</code>;
+              return <code key={_key} className='custom-code-style dark:dark-custom-code-style'>{acc}</code>;
             case 'strike-through': // Handling for strike-through
               return <s key={_key}>{acc}</s>; 
             default:
