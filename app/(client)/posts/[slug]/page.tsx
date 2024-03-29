@@ -281,7 +281,7 @@ const page = async ({params}: Params) => {
             </div>
         </article>
         {headings && headings.length > 0 && (
-               <div id='table-of-content' className="hidden sm:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-60">
+               <div id='table-of-content' className="hidden lg:block sticky top-32 max-h-[calc(100vh*4/6)] overflow-auto custom-scrollbar text-sm flex-shrink-0 w-60">
               <TableOfContents headings={headings}/>
               </div>
         )}
@@ -410,7 +410,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
       : 'tsx';    
       return (
         <div className="relative">
-          <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-prismjs-default shadow-md dark:shadow-gray-700 mt-2">
+          <pre className="text-inherit custom-scrollbar md:flex overflow-auto p-3 my-2 rounded-lg w-auto h-2/6 bg-prismjs-default shadow-md dark:shadow-gray-700 mt-2">
             {/* Use "plaintext" or another safe default for unknown languages */}
             <Refractor language={language} value={value.code} />
           </pre>

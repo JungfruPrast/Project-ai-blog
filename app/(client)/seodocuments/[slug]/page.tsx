@@ -431,7 +431,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
       : 'tsx';    
       return (
         <div className="relative">
-          <pre className="text-inherit custom-scrollbar md:flex overflow-auto overflow-y-auto p-3 my-2 rounded-lg w-auto h-96 bg-prismjs-default shadow-md dark:shadow-gray-700">
+          <pre className="text-inherit custom-scrollbar md:flex overflow-auto h-36 p-3 my-2 rounded-lg w-auto bg-prismjs-default shadow-md dark:shadow-gray-700">
             {/* Use "plaintext" or another safe default for unknown languages */}
             <Refractor language={language} value={value.code} />
           </pre>
