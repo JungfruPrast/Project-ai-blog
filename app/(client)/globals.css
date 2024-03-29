@@ -72,3 +72,20 @@ html {
 .bg-prismjs-default {
   background-color: #f5f2f0;
 }
+
+.custom-code-style {
+  background-color: #f5f2f0; /* Translucent gray background */
+  color: #1f2937;
+  padding: 0.25rem 0.5rem; /* Padding around the code for better readability */
+  border-radius: 0.375rem; /* Rounded corners */
+  font-family: monospace; /* Monospaced font for code */
+}
+
+/* Custom Code Style for Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .custom-code-style {
+    background-color: #2d2d2d; /* Darker background for dark mode */
+    color: #cdd6f4; /* Lighter text color for better readability in dark mode */
+    /* The rest of the properties remain the same, so they're not repeated */
+  }
+}
