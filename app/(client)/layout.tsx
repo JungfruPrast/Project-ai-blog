@@ -10,7 +10,6 @@ import { Analytics } from '@vercel/analytics/react';
 import { headers } from 'next/headers';
 import Script from 'next/script';
 import CookieConsentComponent from '../components/CookieConsent';
-import 'prismjs/themes/prism.css'; // or any other theme
 
 
 const inter = Inter({ subsets: ["latin"] });

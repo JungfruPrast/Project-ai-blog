@@ -1,6 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'prismjs/themes/prism.css';
+
+.dark .prism-code {
+  /* Your dark theme styles here, e.g., background-color, color */
+  background-color: #2d2d2d;
+  color: #ccc;
+}
+
+.dark .token.comment,
+.dark .token.prolog,
+.dark .token.doctype,
+.dark .token.cdata {
+  color: #999;
+}
 
 /* Custom scrollbar for Webkit browsers */
 html::-webkit-scrollbar {

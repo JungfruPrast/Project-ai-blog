@@ -15,7 +15,7 @@ const LeftSideNavbar: React.FC<LeftSideNavbarProps> = ({ seoDocuments }) => {
       {seoDocuments.map((doc, index) => (
         <div key={index} className="mb-2">
           <Link href={`/seodocuments/${doc.slug}`}>
-            <div className="block p-2 rounded hover:font-semibold">
+            <div className="block p-2 rounded hover:font-semibold z-50">
               {doc.title}
             </div>
           </Link>
