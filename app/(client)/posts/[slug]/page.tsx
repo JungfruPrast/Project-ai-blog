@@ -264,13 +264,14 @@ const page = async ({params}: Params) => {
                       {/* Featured Image and PortableText content */}
                         <div className="content-container my-4" aria-label="featured-image">
                         {featuredImageSrc && (
-                              // Float the image to the left and add margin for spacing
+                        <div className="hidden lg:block md:block">
                           <Image 
                             src={featuredImageSrc} 
                             alt={featuredImageAlt} 
                             width={250} 
                             height={250} 
                             className="float-left mr-4 mt-12 max-w-2xl sm:px-6 w-auto m-auto" />
+                        </div>
                       )}
                       </div>
 
