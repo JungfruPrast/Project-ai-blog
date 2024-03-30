@@ -8,6 +8,10 @@
   color: white;
 }
 
+.dark code > pre.language-tsx {
+  color: white; /* Makes text color white for TSX code blocks */
+}
+
 /* Customize colors for specific tokens in dark mode for readability */
 .dark .token.comment,
 .dark .token.block-comment,

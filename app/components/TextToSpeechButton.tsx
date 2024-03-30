@@ -16,27 +16,45 @@ interface TextToSpeechButtonProps {
 }
 
 //Logic for concatonating and seperating based on paragraphs by checking if there is a heading or space between words. Uses sanity block systems. 
+interface Block {
+  _type: string;
+  children?: { text: string }[];
+  code?: string;
+  alt?: string;
+  style?: string;
+}
+
 const extractTextFromPortableText = (blocks: Block[]): string[] => {
   let segments = [];
   let currentSegment = '';
 
   blocks.forEach(block => {
-    const isEmptyBlock = block._type === 'block' && (!block.children || block.children.length === 0 || block.children.every(child => !child.text.trim()));
-    if (isEmptyBlock) {
+    if (block._type === 'image' && block.alt) {
+      // Check if we're currently inside a text segment
       if (currentSegment.trim() !== '') {
         segments.push(currentSegment.trim());
-        currentSegment = '';
+        currentSegment = ''; // Reset currentSegment
       }
-    } else if (block.style && ['h1', 'h2', 'h3', 'h4', 'h5'].includes(block.style)) {
-      if (currentSegment.trim() !== '') {
-        segments.push(currentSegment.trim());
-        currentSegment = '';
-      }
-      const headingText = block.children?.map(child => child.text).join(' ') || '';
-      segments.push(headingText);
+      // Add image alt text as its own segment
+      segments.push(block.alt);
     } else {
-      const text = block.children?.map(child => child.text).join(' ') || '';
-      currentSegment += ` ${text}`;
+      const isEmptyBlock = block._type === 'block' && (!block.children || block.children.length === 0 || block.children.every(child => !child.text.trim()));
+      if (isEmptyBlock) {
+        if (currentSegment.trim() !== '') {
+          segments.push(currentSegment.trim());
+          currentSegment = '';
+        }
+      } else if (block.style && ['h1', 'h2', 'h3', 'h4', 'h5'].includes(block.style)) {
+        if (currentSegment.trim() !== '') {
+          segments.push(currentSegment.trim());
+          currentSegment = '';
+        }
+        const headingText = block.children?.map(child => child.text).join(' ') || '';
+        segments.push(headingText);
+      } else {
+        const text = block.children?.map(child => child.text).join(' ') || '';
+        currentSegment += ` ${text}`;
+      }
     }
   });
 
@@ -46,6 +64,7 @@ const extractTextFromPortableText = (blocks: Block[]): string[] => {
 
   return segments;
 };
+
 
 const TextToSpeechButton: React.FC<TextToSpeechButtonProps> = ({ blocks }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
