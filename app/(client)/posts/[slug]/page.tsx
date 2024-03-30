@@ -375,7 +375,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
             default:
               return acc;
           }
-        }, text);
+        }, <span className="text-inherit">{text}</span>);
       };
 
       const renderChildren = (children: Span[]): JSX.Element[] =>
@@ -412,7 +412,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
         <div className="relative">
           <pre className="md:flex overflow-auto p-3 my-2 rounded-lg w-auto h-2/6 bg-prismjs-default shadow-md dark:shadow-gray-700 mt-2 z-10">
             {/* Use "plaintext" or another safe default for unknown languages */}
-            <Refractor language={language} value={value.code} className='custom-scrollbar'/>
+            <Refractor language={language} value={value.code} className='custom-scrollbar  text-black dark:text-white'/>
           </pre>
           <div className="absolute bottom-0 right-2">
             <CopyToClipboard textToCopy={value.code} />
