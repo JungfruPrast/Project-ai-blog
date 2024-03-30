@@ -5,7 +5,7 @@
 
 .dark pre[class*="language-"] {
   background: #2d2d2d;
-  color: #2d2d2d;
+  color: white;
 }
 
 /* Customize colors for specific tokens in dark mode for readability */
@@ -16,6 +16,17 @@
 .dark .token.cdata {
   color: #2d2d2d;
   text-shadow: none;
+  box-shadow: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.dark .token.punctuation {
+  color: white;
+}
+
+.dark .token.operator {
+  color: white;
+  background: inherit;
 }
 
 /* Custom scrollbar for Webkit browsers */
