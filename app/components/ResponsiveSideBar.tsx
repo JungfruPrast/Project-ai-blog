@@ -14,7 +14,7 @@ const ResponsiveSidebarWrapper: React.FC<ResponsiveSidebarWrapperProps> = ({ chi
       {/* Toggle Button for Mobile */}
       <button
         onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-        className="lg:hidden fixed z-40 top-20 right-6 bg-black text-white dark:bg-white dark:text-black p-2 rounded-full shadow-lg"
+        className="lg:hidden fixed z-50 top-20 right-6 bg-black text-white dark:bg-white dark:text-black p-2 rounded-full shadow-lg"
         aria-label={isSidebarVisible ? 'Close Sidebar' : 'Open Sidebar'}>
         {isSidebarVisible ? 'Close' : 'Menu'}
       </button>
