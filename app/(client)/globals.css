@@ -3,13 +3,28 @@
 @tailwind utilities;
 @import 'prismjs/themes/prism.css';
 
-.dark pre[class*="language-"] {
+/* Default text color for code blocks (light theme) */
+code[class*="language-"] {
+  color: #1f2937; /* Dark color for light theme */
+}
+
+/* Text color for code blocks in dark theme */
+.dark code[class*="language-"] {
+  color: #ffffff; /* Light color for dark theme */
+}
+
+.dark.dark pre[class*="language-"] {
   background: #2d2d2d;
   color: white;
 }
 
-.dark code > pre.language-tsx {
+.dark.dark code > pre.language-tsx {
   color: white; /* Makes text color white for TSX code blocks */
+}
+
+/* Ensure parent elements have correct text colors for themes */
+pre, code {
+  color: var(--text-color); /* Using CSS variable for easy theme switching */
 }
 
 /* Customize colors for specific tokens in dark mode for readability */
@@ -18,10 +33,18 @@
 .dark .token.prolog,
 .dark .token.doctype,
 .dark .token.cdata {
-  color: #2d2d2d;
+  color: #f5f2f0;
   text-shadow: none;
   box-shadow: none;
   -webkit-text-fill-color: currentColor;
+}
+
+.dark .token.constant {
+  color: #56b6c2;
+}
+
+.dark .token.boolean {
+  color: #23963c; /* Soft/Light Sky Blue for functions */
 }
 
 .dark .token.punctuation {
@@ -32,6 +55,41 @@
   color: white;
   background: inherit;
 }
+
+
+.dark .token.keyword {
+  color: #c678dd; /* Soft purple for keywords, for distinction */
+}
+
+.dark .token.variable {
+  color: #e06c75; /* Soft red for variables, for emphasis */
+}
+
+.dark .token.number {
+  color: #d19a66; /* Soft orange for numbers, easy on the eyes */
+}
+
+.dark .token.string {
+  color: #98c379; /* Soft green for strings, for readability */
+}
+
+.dark .token.function {
+  color: #61afef; /* Soft blue for functions, stands out */
+}
+
+.dark .token.class-name {
+  color: #e5c07b; /* Soft yellow for class names, for clarity */
+}
+
+.dark .token.attr-name {
+  color: #d19a66; /* Reusing soft orange for attribute names, consistency */
+}
+
+.dark .token.attr-value {
+  color: #98c379; /* Reusing soft green for attribute values, readability */
+}
+
+
 
 /* Custom scrollbar for Webkit browsers */
 html::-webkit-scrollbar {
