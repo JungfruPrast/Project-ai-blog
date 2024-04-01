@@ -47,7 +47,6 @@ async function getPosts() {
 
   //adding quick hot fix for internal server error 
 
-
 interface Props {
     post: Post;
 }
@@ -69,13 +68,15 @@ const PostComponent = ({post}: Props) => {
             />
           </div>
         )}
+        {/* next link is potentially hinderring crawlability of page: just checked devtool, normal Link still does the anchor tag */}
         <div className="flex-grow"> {/* This div wraps the text and tags */}
-          <Link href={`/posts/${post?.slug?.current}`}>
-            
+          <Link legacyBehavior href={`/posts/${post?.slug?.current}`}>
+            <a>
+              {/* is this even optimized? shouldn't it be an anchor with a href */}
               <h2 className='text-2xl font-bold dark:text-slate-100'>{post?.title}</h2>
               <p className='my-2 font-semibold'>{new Date(post?.publishedAt).toDateString()}</p>
               <p className='dark:text-gray-200 mb-4 line-clamp-2'>{post?.excerpt}</p>
-            
+            </a>
           </Link>
           {/* Tags div now moved here to be part of the main flow */}
           <div className="mt-2"> {/* Added margin-top for spacing */}
@@ -90,7 +91,6 @@ const PostComponent = ({post}: Props) => {
       </div>
     );
   };
-
 
 const cardStyle = `
 max-w-6xl

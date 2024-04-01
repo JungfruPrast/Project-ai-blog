@@ -150,15 +150,15 @@ const TextToSpeechButton: React.FC<TextToSpeechButtonProps> = ({ blocks }) => {
   return (
     <div className="inline-flex items-center mt-2">
       {/* Replay, Play/Pause, Forward buttons */}
-      <button onClick={handlePreviousClick} className="p-2">
+      <button onClick={handlePreviousClick} className="p-2" aria-label='Replay-Button'>
         <ReplayIcon />
       </button>
   
-      <button onClick={togglePlayPause} className="p-2">
+      <button onClick={togglePlayPause} className="p-2" aria-label='Pause-Button'>
         {isSpeaking ? <PauseIcon /> : <PlayIcon />}
       </button>
   
-      <button onClick={handleNextClick} className="p-2">
+      <button onClick={handleNextClick} className="p-2" aria-label='Forward-Button'>
         <ForwardIcon />
       </button>
   
