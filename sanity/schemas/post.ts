@@ -32,7 +32,7 @@ export const post = {
         {
             name: "excerpt",
             title: "Excerpt",
-            type: "text",
+            type: "text", //note to reduce max character length for the rule, needs to be 165 characters long 
             validation: (Rule:Rule) => Rule.max(200).error('Max 200 characters')
         },
         {

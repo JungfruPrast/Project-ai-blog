@@ -118,7 +118,6 @@ export async function generateMetadata({ params }: { params: { slug: string } },
     noimageindex: false, // Use true to prevent images on this page from being indexed
   },
     }
-    // Add other metadata fields as needed e.g opengraph 
 };
 
 interface TextChild {

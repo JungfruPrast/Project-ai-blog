@@ -33,7 +33,7 @@ export const SEO = {
         },
         {
             name: "excerpt",
-            title: "Excerpt",
+            title: "Excerpt", //modified excerpt to right character length, need to rewrite excerpts for articles before uploading 
             type: "text",
             validation: (Rule: Rule) => Rule.max(200).error('Max 200 characters')
         },
