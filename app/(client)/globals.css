@@ -89,6 +89,29 @@ pre, code {
   color: #98c379; /* Reusing soft green for attribute values, readability */
 }
 
+@media (max-width: 768px) {
+  /* Reset code block colors */
+  code[class*="language-"], .token, pre[class*="language-"] {
+      color: initial;
+      background: initial;
+  }
+
+  /* Reset specific token colors */
+  .token.comment, .token.block-comment, .token.prolog,
+  .token.doctype, .token.cdata, .token.constant, .token.boolean,
+  .token.punctuation, .token.operator, .token.keyword,
+  .token.variable, .token.number, .token.string,
+  .token.function, .token.class-name, .token.attr-name,
+  .token.attr-value {
+      color: inherit; /* Or use a specific color that matches your design */
+  }
+
+  /* Override specific theme-based styles */
+  .dark code[class*="language-"], .dark pre[class*="language-"] {
+      background: inherit;
+      color: inherit;
+  }
+}
 
 
 /* Custom scrollbar for Webkit browsers */

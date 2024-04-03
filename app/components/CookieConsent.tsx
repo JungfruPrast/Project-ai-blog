@@ -46,8 +46,8 @@ const CookieConsentComponent = () => {
       enableDeclineButton
       cookieName="userConsentCookie"
       style={{ background: "black", fontSize: "14px" }}
-      buttonStyle={{ color: "white", fontSize: "13px", margin: "0 10px" }}
-      declineButtonStyle={{ color: "white", fontSize: "13px" }}
+      buttonStyle={{ color: "black", fontSize: "13px", margin: "0 10px" }}
+      declineButtonStyle={{ color: "black", fontSize: "13px" }}
       onAccept={() => {
         localStorage.setItem('analyticsConsent', 'true');
         // Optionally, refresh the page or invoke additional logic

@@ -355,7 +355,7 @@ const myPortableTextComponents: Partial<PortableTextProps['components']> = {
             case 'strike-through': // Handling for strike-through
               return <s key={_key}>{acc}</s>;
             case 'code':
-              return <code key={_key} className='custom-code-style dark:bg-zinc-800 dark:rounded-md dark:text-white'>{acc}</code>;
+              return <code key={_key} className='custom-code-style dark:bg-zinc-800 dark:rounded-md dark:text-white sm:text-black sm:dark:text-white'>{acc}</code>;
             default:
               return acc;
           }

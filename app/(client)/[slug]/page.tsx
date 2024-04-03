@@ -7,6 +7,7 @@ import CopyToClipboard from '@/app/components/CopytoClipboard';
 import { PortableTextProps } from '@portabletext/react';
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/image';
+import { ResolvingMetadata, Metadata } from 'next';
 
 // Update the interface to match the new schema
 interface PageData {
@@ -64,6 +65,38 @@ export async function generateStaticParams() {
 interface Params {
   params: {
     slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }, parent: ResolvingMetadata): Promise<Metadata> {
+  const slug = params.slug;
+  const pageData: PageData = await fetchPageData(slug);
+
+  if (!fetchPageData) {
+    return {}; 
+  }
+
+  return {
+    title: pageData?.title,
+    description: pageData?.excerpt,
+    authors: [{name: 'Ezra Leong', url: 'https://project-ai-blog.vercel.app/about'}],
+    openGraph: {
+      type: 'article',
+      // publishedTime: pageData.publishedAt,
+      // modifiedTime: pageData.updatedAt || pageData.publishedAt,
+      url: `https://project-ai-blog.vercel.app/${slug}`, // Adjust with your actual URL structure
+      title: pageData.title,
+      description: pageData.excerpt,
+    },
+    robots: {
+      index: true, // or false to prevent this page from being indexed
+      follow: true, // or false to instruct bots not to follow links from this page
+    // Additional directives can be included as needed:
+      noarchive: false, // Use true to prevent cached copies of this page from being available
+      nosnippet: false, // Use true to prevent a text snippet or video preview from being shown in search results
+      notranslate: false, // Use true to prevent translation of this page in search results
+      noimageindex: false, // Use true to prevent images on this page from being indexed
+    },
   };
 }
 
